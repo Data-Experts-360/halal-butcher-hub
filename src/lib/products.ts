@@ -56,7 +56,7 @@ export const PRODUCTS: Product[] = [
 
   // LAMB / GOAT (mutton)
   { id: "lamb-chops", name: "Lamb Chops", category: "lamb", group: "meat", subcategory: "Steaks", price: 24.99, unit: "lb",
-    image: img("photo-1602541486876-cf01ab95ec5b"),
+    image: lambChopsImg,
     description: "Frenched lamb rib chops, milk-fed.",
     weights: [0.5, 1, 2], preparations: ["Whole", "Bone-in"] },
   { id: "lamb-leg", name: "Whole Leg of Lamb", category: "lamb", group: "meat", subcategory: "Roasts", price: 17.5, unit: "lb",
