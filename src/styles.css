@@ -143,3 +143,75 @@
     radial-gradient(ellipse at 85% 90%, oklch(0.92 0.03 60 / 0.6), transparent 50%),
     linear-gradient(180deg, oklch(0.985 0.005 60), oklch(0.96 0.01 50));
 }
+
+@utility clay-pill {
+  background: linear-gradient(145deg, oklch(1 0 0), oklch(0.95 0.01 60));
+  border-radius: 9999px;
+  box-shadow:
+    4px 4px 10px oklch(0.20 0.02 270 / 0.15),
+    -2px -2px 8px oklch(1 0 0 / 0.95),
+    inset 1px 1px 2px oklch(1 0 0 / 0.9);
+}
+
+@utility clay-stat {
+  background: linear-gradient(145deg, oklch(0.99 0.005 60), oklch(0.93 0.01 50));
+  border-radius: 1.25rem;
+  box-shadow:
+    8px 8px 18px oklch(0.20 0.02 270 / 0.15),
+    -5px -5px 14px oklch(1 0 0 / 0.9),
+    inset 1px 1px 2px oklch(1 0 0 / 0.9);
+}
+
+@utility clay-btn-meat {
+  background: linear-gradient(145deg, oklch(0.62 0.22 27), oklch(0.46 0.21 27));
+  border-radius: 9999px;
+  color: white;
+  box-shadow:
+    8px 8px 18px oklch(0.30 0.18 27 / 0.45),
+    -3px -3px 10px oklch(1 0 0 / 0.15),
+    inset 2px 2px 3px oklch(1 0 0 / 0.25),
+    inset -2px -2px 6px oklch(0.20 0.10 27 / 0.4);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+@utility clay-btn-meat-hover {
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      12px 12px 24px oklch(0.30 0.18 27 / 0.5),
+      -4px -4px 12px oklch(1 0 0 / 0.18),
+      inset 2px 2px 3px oklch(1 0 0 / 0.3),
+      inset -2px -2px 6px oklch(0.20 0.10 27 / 0.4);
+  }
+}
+
+@utility clay-btn-light {
+  background: linear-gradient(145deg, oklch(1 0 0), oklch(0.94 0.01 50));
+  border-radius: 9999px;
+  color: var(--ink);
+  box-shadow:
+    8px 8px 18px oklch(0.20 0.02 270 / 0.18),
+    -5px -5px 14px oklch(1 0 0 / 0.95),
+    inset 1px 1px 2px oklch(1 0 0 / 0.9);
+  transition: transform 0.25s ease;
+}
+@utility clay-btn-light-hover {
+  &:hover { transform: translateY(-2px); }
+}
+
+@utility clay-image-frame {
+  border-radius: 2.25rem;
+  padding: 0.9rem;
+  background: linear-gradient(145deg, oklch(1 0 0), oklch(0.93 0.01 50));
+  box-shadow:
+    20px 20px 40px oklch(0.20 0.02 270 / 0.22),
+    -10px -10px 30px oklch(1 0 0 / 0.9),
+    inset 2px 2px 4px oklch(1 0 0 / 0.9);
+}
+
+@keyframes clay-float-slow {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-12px) rotate(1deg); }
+}
+@utility animate-clay-float-slow {
+  animation: clay-float-slow 8s ease-in-out infinite;
+}
