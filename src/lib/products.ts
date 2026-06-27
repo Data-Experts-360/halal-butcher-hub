@@ -1,3 +1,6 @@
+import lambChopsImg from "@/assets/lamb-chops.jpg";
+import groundBeefImg from "@/assets/ground-beef.jpg";
+
 export type Category = "beef" | "lamb" | "goat" | "chicken" | "grocery";
 export type Group = "meat" | "grocery";
 
