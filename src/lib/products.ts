@@ -1,3 +1,6 @@
+import lambChopsImg from "@/assets/lamb-chops.jpg";
+import groundBeefImg from "@/assets/ground-beef.jpg";
+
 export type Category = "beef" | "lamb" | "goat" | "chicken" | "grocery";
 export type Group = "meat" | "grocery";
 
@@ -43,7 +46,7 @@ export const PRODUCTS: Product[] = [
     description: "Slow-cook ready brisket, perfect for smoking.",
     weights: [4, 6, 8, 10], preparations: ["Whole", "Trimmed"] },
   { id: "beef-mince", name: "Ground Beef (Lean)", category: "beef", group: "meat", subcategory: "Diced", price: 8.99, unit: "lb",
-    image: img("photo-1602470521006-bc5c3d40d139"),
+    image: groundBeefImg,
     description: "Freshly ground 85/15 lean beef, daily.",
     weights: [1, 2, 5], preparations: ["Minced / Ground"] },
   { id: "beef-shortrib", name: "Beef Short Ribs", category: "beef", group: "meat", subcategory: "BBQ Specials", price: 16.99, unit: "lb",
@@ -53,7 +56,7 @@ export const PRODUCTS: Product[] = [
 
   // LAMB / GOAT (mutton)
   { id: "lamb-chops", name: "Lamb Chops", category: "lamb", group: "meat", subcategory: "Steaks", price: 24.99, unit: "lb",
-    image: img("photo-1602541486876-cf01ab95ec5b"),
+    image: lambChopsImg,
     description: "Frenched lamb rib chops, milk-fed.",
     weights: [0.5, 1, 2], preparations: ["Whole", "Bone-in"] },
   { id: "lamb-leg", name: "Whole Leg of Lamb", category: "lamb", group: "meat", subcategory: "Roasts", price: 17.5, unit: "lb",
