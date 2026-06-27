@@ -37,13 +37,14 @@ function SignIn() {
       >
         <div>
           <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Email</Label>
-          <Input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@email.com" className="mt-2 focus-visible:ring-meat" />
+          <Input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@email.com" className="clay-pill mt-2 border-0 px-5 py-6 focus-visible:ring-meat" />
         </div>
         <div>
           <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Password</Label>
-          <Input type="password" placeholder="••••••••" className="mt-2 focus-visible:ring-meat" />
+          <Input type="password" placeholder="••••••••" className="clay-pill mt-2 border-0 px-5 py-6 focus-visible:ring-meat" />
         </div>
-        <Button type="submit" className="w-full bg-meat py-6 font-bold text-white hover:bg-meat-dark">Sign in</Button>
+        <button type="submit" className="clay-btn-meat clay-btn-meat-hover w-full py-4 font-bold">Sign in</button>
+
       </form>
     </AuthShell>
   );
