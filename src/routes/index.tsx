@@ -25,70 +25,98 @@ function Home() {
 
   return (
     <div>
-      {/* HERO */}
-      <section className="relative overflow-hidden bg-ink text-white">
-        <div className="absolute inset-0">
-          <img
-            src="https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?auto=format&fit=crop&w=1800&q=80"
-            alt=""
-            className="h-full w-full object-cover opacity-40"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/80 to-ink/30" />
-        </div>
+      {/* HERO — Claymorphism */}
+      <section className="relative overflow-hidden bg-clay-canvas">
+        {/* floating decorative blobs */}
+        <div aria-hidden className="pointer-events-none absolute -left-32 -top-20 h-96 w-96 rounded-full bg-meat/20 blur-3xl" />
+        <div aria-hidden className="pointer-events-none absolute -right-24 top-40 h-80 w-80 rounded-full bg-amber-200/50 blur-3xl" />
+        <div aria-hidden className="pointer-events-none absolute left-1/3 bottom-0 h-72 w-72 rounded-full bg-rose-200/40 blur-3xl" />
 
-        <div className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
-          <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-white/80 backdrop-blur">
-              <BadgeCheck className="h-3.5 w-3.5 text-meat" />
-              100% Zabiha Halal · Hand-Slaughtered
+        <div className="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
+          <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_1fr]">
+            {/* LEFT: copy */}
+            <div>
+              <div className="inline-flex items-center gap-2 clay-pill px-4 py-2 text-[11px] font-black uppercase tracking-[0.18em] text-meat">
+                <BadgeCheck className="h-4 w-4 text-meat" />
+                100% Zabiha Halal · Hand-Slaughtered
+              </div>
+
+              <h1 className="mt-7 text-5xl text-balance text-ink sm:text-6xl lg:text-7xl">
+                <span className="block">Premium halal,</span>
+                <span className="block">
+                  <span className="text-meat">cut</span>{" "}
+                  <span>to order.</span>
+                </span>
+              </h1>
+
+              <p className="mt-6 max-w-xl text-lg text-muted-foreground">
+                Family-owned butcher and grocer in Philadelphia. Pasture-raised meats,
+                hand-blended spices, and a pantry stocked with the staples your kitchen
+                actually uses.
+              </p>
+
+              <div className="mt-9 flex flex-wrap gap-4">
+                <Link to="/shop-meat">
+                  <button className="clay-btn-meat clay-btn-meat-hover inline-flex h-14 items-center px-8 text-base font-black tracking-wide">
+                    <Beef className="mr-2 h-5 w-5" /> Shop Meat
+                  </button>
+                </Link>
+                <Link to="/grocery">
+                  <button className="clay-btn-light clay-btn-light-hover inline-flex h-14 items-center px-8 text-base font-black tracking-wide text-ink">
+                    Browse Grocery
+                  </button>
+                </Link>
+              </div>
+
+              <div className="mt-12 grid max-w-md grid-cols-3 gap-4">
+                {[
+                  { n: "30+", l: "Years cutting" },
+                  { n: "100%", l: "Zabiha halal" },
+                  { n: "4.9★", l: "1.2k reviews" },
+                ].map((s) => (
+                  <div key={s.l} className="clay-stat p-4 text-center">
+                    <div className="text-2xl font-black text-meat">{s.n}</div>
+                    <div className="mt-0.5 text-[11px] font-semibold text-muted-foreground">{s.l}</div>
+                  </div>
+                ))}
+              </div>
             </div>
 
-            <h1 className="mt-6 text-5xl text-balance sm:text-6xl lg:text-7xl">
-              <span className="block text-white">Premium halal,</span>
-              <span className="block">
-                <span className="text-meat">cut</span>{" "}
-                <span className="text-white">to order.</span>
-              </span>
-            </h1>
+            {/* RIGHT: floating clay image */}
+            <div className="relative mx-auto w-full max-w-md lg:max-w-none">
+              <div className="clay-image-frame animate-clay-float-slow">
+                <img
+                  src="https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?auto=format&fit=crop&w=1200&q=80"
+                  alt="Premium halal meat cuts"
+                  className="aspect-[4/5] w-full rounded-[1.5rem] object-cover"
+                />
+              </div>
 
-            <p className="mt-6 max-w-xl text-lg text-white/80">
-              Family-owned butcher and grocer in Philadelphia. Pasture-raised meats,
-              hand-blended spices, and a pantry stocked with the staples your kitchen
-              actually uses.
-            </p>
-
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link to="/shop-meat">
-                <Button size="lg" className="h-12 bg-meat px-7 text-base font-bold text-white hover:bg-meat-dark">
-                  <Beef className="mr-2 h-5 w-5" /> Shop Meat
-                </Button>
-              </Link>
-              <Link to="/grocery">
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="h-12 border-white/30 bg-white/5 px-7 text-base font-bold text-white backdrop-blur hover:bg-white/10 hover:text-white"
-                >
-                  Browse Grocery
-                </Button>
-              </Link>
-            </div>
-
-            <div className="mt-10 grid grid-cols-3 gap-4 max-w-md">
-              {[
-                { n: "30+", l: "Years cutting" },
-                { n: "100%", l: "Zabiha halal" },
-                { n: "4.9★", l: "1.2k reviews" },
-              ].map((s) => (
-                <div key={s.l}>
-                  <div className="text-2xl font-black text-meat">{s.n}</div>
-                  <div className="text-xs text-white/70">{s.l}</div>
+              {/* floating clay badges */}
+              <div className="absolute -left-4 top-10 clay-surface flex items-center gap-3 p-4 sm:-left-8">
+                <div className="clay-meat flex h-12 w-12 items-center justify-center">
+                  <ShieldCheck className="h-6 w-6 text-white" />
                 </div>
-              ))}
+                <div>
+                  <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Certified</div>
+                  <div className="text-sm font-extrabold text-ink">HMS Halal</div>
+                </div>
+              </div>
+
+              <div className="absolute -right-2 bottom-12 clay-surface flex items-center gap-3 p-4 sm:-right-6">
+                <div className="clay-meat flex h-12 w-12 items-center justify-center">
+                  <Truck className="h-6 w-6 text-white" />
+                </div>
+                <div>
+                  <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Ready in</div>
+                  <div className="text-sm font-extrabold text-ink">30 min</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
+
 
       {/* TRUST BAR */}
       <section className="border-b border-border bg-card">
