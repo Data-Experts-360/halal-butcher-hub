@@ -164,12 +164,12 @@ function AdminShell() {
   const adminSignOut = useShop((s) => s.adminSignOut);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
-  const nav = [
+  const nav: { to: string; label: string; icon: typeof LayoutDashboard; exact?: boolean }[] = [
     { to: "/admin", label: "Overview", icon: LayoutDashboard, exact: true },
     { to: "/admin/orders", label: "Orders", icon: ShoppingBag },
     { to: "/admin/products", label: "Products", icon: Package },
     { to: "/admin/customers", label: "Customers", icon: Users },
-  ] as const;
+  ];
 
   const isActive = (to: string, exact?: boolean) =>
     exact ? pathname === to : pathname.startsWith(to);
