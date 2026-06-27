@@ -47,6 +47,11 @@ function Checkout() {
 
   const handlePay = async () => {
     if (cart.length === 0) return;
+    if (!user) {
+      toast.error("Please sign in to place your order");
+      navigate({ to: "/signin" });
+      return;
+    }
     setProcessing(true);
     await new Promise((r) => setTimeout(r, 1500));
 
