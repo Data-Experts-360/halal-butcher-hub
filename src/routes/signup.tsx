@@ -37,22 +37,20 @@ function SignUp() {
       >
         <div>
           <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Full name</Label>
-          <Input required value={name} onChange={(e) => setName(e.target.value)} placeholder="Aisha Khan" className="clay-pill mt-2 border-0 px-5 py-6 focus-visible:ring-meat" />
+          <Input required value={name} onChange={(e) => setName(e.target.value)} placeholder="Aisha Khan" className="mt-2 focus-visible:ring-meat" />
         </div>
         <div>
           <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Email</Label>
-          <Input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@email.com" className="clay-pill mt-2 border-0 px-5 py-6 focus-visible:ring-meat" />
+          <Input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@email.com" className="mt-2 focus-visible:ring-meat" />
         </div>
         <div>
           <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Password</Label>
-          <Input type="password" required placeholder="••••••••" className="clay-pill mt-2 border-0 px-5 py-6 focus-visible:ring-meat" />
+          <Input type="password" required placeholder="••••••••" className="mt-2 focus-visible:ring-meat" />
         </div>
-        <div className="clay-pill flex items-center gap-2 px-5 py-3 text-sm font-semibold text-meat-dark">
-          <span className="grid h-7 w-7 place-items-center rounded-full bg-meat text-white text-xs">✦</span>
-          50 loyalty points added on signup
+        <div className="rounded-xl border border-meat/30 bg-accent p-3 text-sm text-meat-dark font-semibold">
+          ✦ 50 loyalty points added on signup
         </div>
-        <button type="submit" className="clay-btn-meat clay-btn-meat-hover w-full py-4 font-bold">Create account</button>
-
+        <Button type="submit" className="w-full bg-meat py-6 font-bold text-white hover:bg-meat-dark">Create account</Button>
       </form>
     </AuthShell>
   );
