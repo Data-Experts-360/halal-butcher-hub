@@ -46,7 +46,7 @@ export const PRODUCTS: Product[] = [
     description: "Slow-cook ready brisket, perfect for smoking.",
     weights: [4, 6, 8, 10], preparations: ["Whole", "Trimmed"] },
   { id: "beef-mince", name: "Ground Beef (Lean)", category: "beef", group: "meat", subcategory: "Diced", price: 8.99, unit: "lb",
-    image: img("photo-1602470521006-bc5c3d40d139"),
+    image: groundBeefImg,
     description: "Freshly ground 85/15 lean beef, daily.",
     weights: [1, 2, 5], preparations: ["Minced / Ground"] },
   { id: "beef-shortrib", name: "Beef Short Ribs", category: "beef", group: "meat", subcategory: "BBQ Specials", price: 16.99, unit: "lb",
