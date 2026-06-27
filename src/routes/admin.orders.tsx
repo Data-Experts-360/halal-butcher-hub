@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { useShop, type Order } from "@/lib/store";
 
 export const Route = createFileRoute("/admin/orders")({
-  component: AdminOrders;
+  component: AdminOrders,
 });
 
 const STATUSES: Order["status"][] = ["pending", "ready", "completed", "cancelled"];
