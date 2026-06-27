@@ -184,47 +184,92 @@ function Home() {
         </div>
       </section>
 
-      {/* HOW IT WORKS */}
-      <section className="relative overflow-hidden bg-ink py-20 text-white">
-        <div className="absolute inset-0 bg-meat-grain opacity-60" />
+      {/* HOW IT WORKS — Claymorphism */}
+      <section className="relative overflow-hidden bg-clay-canvas py-24">
+        {/* floating blobs */}
+        <div aria-hidden className="pointer-events-none absolute -left-24 top-20 h-72 w-72 rounded-full bg-meat/20 blur-3xl" />
+        <div aria-hidden className="pointer-events-none absolute -right-20 bottom-10 h-80 w-80 rounded-full bg-amber-200/40 blur-3xl" />
+
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <span className="text-xs font-bold uppercase tracking-[0.2em] text-meat">How it works</span>
+          <div className="mx-auto max-w-2xl text-center">
+            <span className="inline-block rounded-full clay-number px-4 py-1.5 text-[11px] font-black uppercase tracking-[0.2em] text-meat">
+              How it works
+            </span>
             <AccentHeading
               as="h2"
-              text="Four steps to your order"
+              text="From counter to kitchen"
               accentIndex={3}
-              className="mt-3 text-4xl sm:text-5xl text-white [&_span:not(.text-meat)]:text-white"
+              className="mt-5 text-4xl sm:text-5xl lg:text-6xl"
             />
-            <p className="mx-auto mt-4 max-w-xl text-white/70">
-              From counter to kitchen in under an hour. No subscriptions, no waiting.
+            <p className="mx-auto mt-5 max-w-lg text-lg text-muted-foreground">
+              Four simple, tactile steps. No subscriptions. No waiting around.
+              Your order is hand-prepared and ready when you arrive.
             </p>
           </div>
 
-          <ol className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <ol className="mt-16 grid gap-10 sm:gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {[
-              { i: Beef, n: "01", t: "Choose your cut", d: "Pick from beef, lamb, goat, chicken — or stock your pantry." },
-              { i: BadgeCheck, n: "02", t: "Custom prep", d: "Cubed, minced, sliced, bone-in. Tell us how you cook it." },
-              { i: Clock, n: "03", t: "Pickup window", d: "Reserve a 30-minute slot. Your order is fresh when you arrive." },
-              { i: CreditCard, n: "04", t: "Secure checkout", d: "Pay safely with Stripe. Earn loyalty points on every order." },
-            ].map(({ i: Icon, n, t, d }, idx, arr) => (
-              <li key={n} className="relative">
-                <div className="relative rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur transition-colors hover:border-meat/50">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-black text-meat">{n}</span>
-                    <Icon className="h-6 w-6 text-meat" />
-                  </div>
-                  <h3 className="mt-6 text-lg font-bold text-white">{t}</h3>
-                  <p className="mt-2 text-sm text-white/70">{d}</p>
+              { i: Beef, n: "01", t: "Choose your cut", d: "Browse beef, lamb, goat, chicken — or stock the pantry in one go." },
+              { i: BadgeCheck, n: "02", t: "Custom prep", d: "Cubed, minced, sliced, bone-in. Tell us exactly how you cook it." },
+              { i: Clock, n: "03", t: "Pick a window", d: "Reserve a 30-minute slot. We start prepping right before you arrive." },
+              { i: CreditCard, n: "04", t: "Pay & earn", d: "Secure checkout with Stripe. Earn loyalty points on every order." },
+            ].map(({ i: Icon, n, t, d }, idx) => (
+              <li
+                key={n}
+                className="group relative clay-surface p-7 pt-12 text-center transition-transform duration-500 hover:-translate-y-2 hover:rotate-[-1deg]"
+                style={{ animationDelay: `${idx * 0.4}s` }}
+              >
+                {/* step number badge */}
+                <span className="absolute -top-5 left-1/2 -translate-x-1/2 clay-number flex h-12 min-w-12 items-center justify-center px-4 text-sm font-black text-ink">
+                  {n}
+                </span>
+
+                {/* big clay icon */}
+                <div className="mx-auto flex h-28 w-28 items-center justify-center clay-meat animate-clay-float group-hover:[animation-play-state:paused]">
+                  <Icon className="h-14 w-14 text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.25)]" strokeWidth={2.25} />
                 </div>
-                {idx < arr.length - 1 && (
-                  <div className="hidden lg:block absolute top-1/2 -right-3 z-10 h-px w-6 bg-meat/40" />
+
+                <h3 className="mt-7 text-xl font-extrabold text-ink">{t}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{d}</p>
+
+                {/* dotted connector to next card */}
+                {idx < 3 && (
+                  <svg
+                    aria-hidden
+                    className="hidden lg:block absolute top-24 -right-8 z-10 h-6 w-16 text-meat/40"
+                    viewBox="0 0 64 24"
+                    fill="none"
+                  >
+                    <path
+                      d="M2 12 H56"
+                      stroke="currentColor"
+                      strokeWidth="3"
+                      strokeLinecap="round"
+                      strokeDasharray="2 7"
+                    />
+                    <path
+                      d="M50 5 L60 12 L50 19"
+                      stroke="currentColor"
+                      strokeWidth="3"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
                 )}
               </li>
             ))}
           </ol>
+
+          <div className="mt-14 flex justify-center">
+            <Link to="/shop-meat">
+              <Button size="lg" className="h-12 bg-meat px-8 text-base font-bold text-white hover:bg-meat-dark shadow-lg shadow-meat/30">
+                Start your order
+              </Button>
+            </Link>
+          </div>
         </div>
       </section>
+
 
       {/* CTA */}
       <section className="bg-background py-20">
