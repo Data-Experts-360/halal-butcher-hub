@@ -118,15 +118,18 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const router = useRouter();
+  const pathname = router.state.location.pathname;
+  const isAdmin = pathname.startsWith("/admin");
 
   return (
     <QueryClientProvider client={queryClient}>
       <div className="flex min-h-screen flex-col bg-background text-foreground">
-        <Navbar />
+        {!isAdmin && <Navbar />}
         <main className="flex-1">
           <Outlet />
         </main>
-        <Footer />
+        {!isAdmin && <Footer />}
         <Toaster richColors position="top-center" />
       </div>
     </QueryClientProvider>
