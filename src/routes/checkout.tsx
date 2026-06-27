@@ -249,13 +249,34 @@ function Checkout() {
             <div className="text-muted-foreground">{format(date, "EEEE, MMMM d")} · {time}</div>
           </div>
 
-          <Button
-            disabled={processing}
-            onClick={handlePay}
-            className="w-full bg-meat py-6 text-base font-bold text-white hover:bg-meat-dark"
-          >
-            {processing ? "Processing…" : `Pay $${total.toFixed(2)}`}
-          </Button>
+          {user ? (
+            <Button
+              disabled={processing}
+              onClick={handlePay}
+              className="w-full bg-meat py-6 text-base font-bold text-white hover:bg-meat-dark"
+            >
+              {processing ? "Processing…" : `Pay $${total.toFixed(2)}`}
+            </Button>
+          ) : (
+            <div className="space-y-2">
+              <div className="rounded-xl border border-meat/30 bg-accent p-3 text-sm font-semibold text-meat-dark">
+                Sign in required to place your order.
+              </div>
+              <Button
+                onClick={() => navigate({ to: "/signin" })}
+                className="w-full bg-meat py-6 text-base font-bold text-white hover:bg-meat-dark"
+              >
+                Sign in to continue
+              </Button>
+              <Button
+                variant="outline"
+                onClick={() => navigate({ to: "/signup" })}
+                className="w-full py-6 text-base font-bold"
+              >
+                Create an account
+              </Button>
+            </div>
+          )}
           <p className="text-center text-xs text-muted-foreground">
             By paying you agree to our pickup terms.
           </p>
