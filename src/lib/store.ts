@@ -5,9 +5,9 @@ export interface CartItem {
   productId: string;
   name: string;
   image: string;
-  price: number;        // unit price
+  price: number;
   unit: string;
-  quantity: number;     // number of units (lbs / items)
+  quantity: number;
   preparation?: string;
 }
 
@@ -15,6 +15,39 @@ export interface User {
   name: string;
   email: string;
   points: number;
+}
+
+export interface OrderItem {
+  name: string;
+  qty: number;
+  unit: string;
+  price: number;
+  prep?: string;
+}
+
+export interface Order {
+  id: string;
+  customerName: string;
+  customerEmail: string;
+  total: number;
+  pointsEarned: number;
+  pickup: string;
+  items: OrderItem[];
+  status: "pending" | "ready" | "completed" | "cancelled";
+  createdAt: number;
+}
+
+export interface AdminProduct {
+  id: string;
+  name: string;
+  category: string;
+  group: "meat" | "grocery";
+  subcategory: string;
+  price: number;
+  unit: string;
+  image: string;
+  description: string;
+  stock: number;
 }
 
 interface ShopState {
@@ -35,9 +68,25 @@ interface ShopState {
   signIn: (email: string) => void;
   signOut: () => void;
   addPoints: (n: number) => void;
+
+  adminAuthed: boolean;
+  adminSignIn: (email: string, password: string) => boolean;
+  adminSignOut: () => void;
+
+  orders: Order[];
+  addOrder: (o: Order) => void;
+  updateOrderStatus: (id: string, status: Order["status"]) => void;
+
+  adminProducts: AdminProduct[];
+  addProduct: (p: AdminProduct) => void;
+  updateProduct: (id: string, patch: Partial<AdminProduct>) => void;
+  deleteProduct: (id: string) => void;
 }
 
 const keyOf = (id: string, prep?: string) => `${id}__${prep ?? ""}`;
+
+export const ADMIN_EMAIL = "admin@pahalal.com";
+export const ADMIN_PASSWORD = "admin123";
 
 export const useShop = create<ShopState>()(
   persist(
@@ -88,6 +137,30 @@ export const useShop = create<ShopState>()(
         const u = get().user;
         if (u) set({ user: { ...u, points: u.points + n } });
       },
+
+      adminAuthed: false,
+      adminSignIn: (email, password) => {
+        if (email.trim().toLowerCase() === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+          set({ adminAuthed: true });
+          return true;
+        }
+        return false;
+      },
+      adminSignOut: () => set({ adminAuthed: false }),
+
+      orders: [],
+      addOrder: (o) => set({ orders: [o, ...get().orders] }),
+      updateOrderStatus: (id, status) =>
+        set({ orders: get().orders.map((o) => (o.id === id ? { ...o, status } : o)) }),
+
+      adminProducts: [],
+      addProduct: (p) => set({ adminProducts: [p, ...get().adminProducts] }),
+      updateProduct: (id, patch) =>
+        set({
+          adminProducts: get().adminProducts.map((p) => (p.id === id ? { ...p, ...patch } : p)),
+        }),
+      deleteProduct: (id) =>
+        set({ adminProducts: get().adminProducts.filter((p) => p.id !== id) }),
     }),
     {
       name: "pa-halal-shop",
