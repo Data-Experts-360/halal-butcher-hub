@@ -29,6 +29,7 @@ function Checkout() {
   const removeFromCart = useShop((s) => s.removeFromCart);
   const clearCart = useShop((s) => s.clearCart);
   const addPoints = useShop((s) => s.addPoints);
+  const addOrder = useShop((s) => s.addOrder);
 
   const dates = Array.from({ length: 5 }, (_, i) => addDays(new Date(), i));
   const [date, setDate] = useState<Date>(dates[0]);
@@ -58,12 +59,17 @@ function Checkout() {
     const orderId = `PA-${Math.random().toString(36).slice(2, 8).toUpperCase()}`;
     const order = {
       id: orderId,
+      customerName: user.name,
+      customerEmail: user.email,
       total,
       pointsEarned,
       pickup: `${format(date, "EEE, MMM d")} · ${time}`,
       items: cart.map((c) => ({ name: c.name, qty: c.quantity, unit: c.unit, price: c.price, prep: c.preparation })),
+      status: "pending" as const,
+      createdAt: Date.now(),
     };
     if (typeof window !== "undefined") sessionStorage.setItem("pa-last-order", JSON.stringify(order));
+    addOrder(order);
 
     if (user) addPoints(pointsEarned);
     clearCart();
