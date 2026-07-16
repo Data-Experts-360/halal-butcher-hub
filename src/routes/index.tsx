@@ -186,6 +186,54 @@ function Home() {
         </div>
       </section>
 
+      {/* POLAROID STRIP — Moments from the shop */}
+      <section className="relative overflow-hidden bg-clay-canvas py-20">
+        <div aria-hidden className="pointer-events-none absolute -left-20 top-10 h-72 w-72 rounded-full bg-amber-200/40 blur-3xl" />
+        <div aria-hidden className="pointer-events-none absolute -right-16 bottom-0 h-72 w-72 rounded-full bg-meat/15 blur-3xl" />
+
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-2xl text-center">
+            <span className="inline-block rounded-full clay-number px-4 py-1.5 text-[11px] font-black uppercase tracking-[0.2em] text-meat">
+              Snapshots
+            </span>
+            <AccentHeading
+              as="h2"
+              text="Moments from the shop"
+              accentIndex={2}
+              className="mt-5 text-4xl sm:text-5xl"
+            />
+          </div>
+
+          <div className="mt-14 flex flex-wrap items-center justify-center gap-6 sm:gap-8">
+            {[
+              { src: "/gmb-images/pa-butcherand-gorcers1.webp", cap: "Morning cut", rot: -6, mt: 0 },
+              { src: "/gmb-images/pa-butcherand-gorcers9.webp", cap: "Fresh in", rot: 4, mt: 24 },
+              { src: "/gmb-images/pa-butcherand-gorcers16.webp", cap: "House blend", rot: -3, mt: -12 },
+              { src: "/gmb-images/pa-butcherand-gorcers25.webp", cap: "Counter classics", rot: 6, mt: 18 },
+              { src: "/gmb-images/pa-butcherand-gorcers33.webp", cap: "Weekend prep", rot: -5, mt: -6 },
+            ].map((p) => (
+              <div
+                key={p.src}
+                style={{ transform: `rotate(${p.rot}deg)`, marginTop: p.mt }}
+                className="group relative w-40 rounded-lg bg-white p-2.5 pb-9 shadow-[0_18px_40px_-12px_rgba(0,0,0,0.25)] transition-transform duration-300 hover:!rotate-0 hover:-translate-y-1 sm:w-48"
+              >
+                <img
+                  src={p.src}
+                  alt={p.cap}
+                  loading="lazy"
+                  className="aspect-square w-full rounded-sm object-cover"
+                />
+                <span className="absolute inset-x-0 bottom-2 text-center font-[cursive] text-sm text-ink/80">
+                  {p.cap}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+
+
       {/* FEATURED PRODUCTS */}
       <section className="bg-background py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -211,6 +259,74 @@ function Home() {
           </div>
         </div>
       </section>
+
+      {/* AD BANNER — Weekly special split */}
+      <section className="bg-background pb-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="relative overflow-hidden rounded-[2rem] bg-ink text-white shadow-xl">
+            <div className="grid gap-0 lg:grid-cols-[1.15fr_1fr]">
+              {/* copy */}
+              <div className="relative z-10 flex flex-col justify-center p-8 sm:p-12 lg:p-16">
+                <span className="inline-flex w-fit items-center gap-2 rounded-full bg-meat/20 px-3.5 py-1.5 text-[11px] font-black uppercase tracking-[0.2em] text-meat">
+                  <Sparkles className="h-3.5 w-3.5" /> This week at the counter
+                </span>
+                <h2 className="mt-5 text-4xl font-black leading-[1.05] sm:text-5xl lg:text-6xl">
+                  Whole lamb, <span className="text-meat">custom cut</span> — free of charge.
+                </h2>
+                <p className="mt-5 max-w-md text-white/70">
+                  Order a whole or half lamb this week and we'll break it down exactly the way your kitchen needs — chops, mince, curry cut, roast — at no extra cost.
+                </p>
+                <div className="mt-8 flex flex-wrap items-center gap-4">
+                  <Link to="/shop-meat">
+                    <Button size="lg" className="bg-meat text-white hover:bg-meat-dark">
+                      Reserve your lamb
+                    </Button>
+                  </Link>
+                  <div className="flex items-center gap-3 text-sm text-white/70">
+                    <BadgeCheck className="h-5 w-5 text-meat" />
+                    Cut fresh, packed clean
+                  </div>
+                </div>
+              </div>
+
+              {/* framed image collage */}
+              <div className="relative min-h-[320px] lg:min-h-[520px]">
+                <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-r from-ink via-ink/40 to-transparent lg:from-ink/80 lg:via-transparent" />
+                <img
+                  src="/gmb-images/pa-butcherand-gorcers5.webp"
+                  alt="Butcher preparing lamb"
+                  loading="lazy"
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
+                {/* floating framed thumbs */}
+                <div className="absolute bottom-6 right-6 hidden gap-3 sm:flex">
+                  {["/gmb-images/pa-butcherand-gorcers14.webp", "/gmb-images/pa-butcherand-gorcers23.webp"].map((s, i) => (
+                    <div
+                      key={s}
+                      className="h-24 w-24 overflow-hidden rounded-2xl border-4 border-white/90 shadow-2xl"
+                      style={{ transform: `rotate(${i === 0 ? -6 : 5}deg)` }}
+                    >
+                      <img src={s} alt="" loading="lazy" className="h-full w-full object-cover" />
+                    </div>
+                  ))}
+                </div>
+                {/* price tag */}
+                <div className="absolute left-6 top-6 flex items-center gap-3 rounded-2xl bg-white/95 p-3 pr-5 text-ink shadow-2xl backdrop-blur">
+                  <div className="grid h-11 w-11 place-items-center rounded-xl bg-meat text-white">
+                    <Beef className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Save</div>
+                    <div className="text-base font-black leading-tight">Up to $40 in cutting fees</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
 
       {/* HOW IT WORKS — Claymorphism */}
       <section className="relative overflow-hidden bg-clay-canvas py-24">
@@ -297,6 +413,50 @@ function Home() {
           </div>
         </div>
       </section>
+
+      {/* MASONRY GALLERY — Straight from our counter */}
+      <section className="relative overflow-hidden bg-background py-24">
+        <div aria-hidden className="pointer-events-none absolute left-1/2 top-0 h-64 w-64 -translate-x-1/2 rounded-full bg-meat/10 blur-3xl" />
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-wrap items-end justify-between gap-6">
+            <div className="max-w-xl">
+              <span className="text-xs font-bold uppercase tracking-[0.2em] text-meat">Straight from our counter</span>
+              <AccentHeading
+                as="h2"
+                text="A peek inside the shop"
+                accentIndex={2}
+                className="mt-3 text-4xl sm:text-5xl"
+              />
+              <p className="mt-4 text-muted-foreground">
+                Real cuts, real people, real Zabiha. Every photo is from our own counter — no stock, no filters.
+              </p>
+            </div>
+            <div className="hidden items-center gap-3 rounded-full border border-border bg-card px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-ink sm:inline-flex">
+              <span className="h-2 w-2 rounded-full bg-meat" /> Updated weekly
+            </div>
+          </div>
+
+          <div className="mt-12 grid grid-cols-2 gap-4 sm:gap-5 md:grid-cols-4">
+            {[
+              { src: "/gmb-images/pa-butcherand-gorcers3.webp", cls: "row-span-2 aspect-[3/5]", tag: "Beef" },
+              { src: "/gmb-images/pa-butcherand-gorcers12.webp", cls: "aspect-square", tag: "Lamb" },
+              { src: "/gmb-images/pa-butcherand-gorcers21.webp", cls: "aspect-square", tag: "Prep" },
+              { src: "/gmb-images/pa-butcherand-gorcers7.webp", cls: "row-span-2 aspect-[3/5]", tag: "BBQ" },
+              { src: "/gmb-images/pa-butcherand-gorcers18.webp", cls: "aspect-square", tag: "Fresh" },
+              { src: "/gmb-images/pa-butcherand-gorcers29.webp", cls: "aspect-square", tag: "Counter" },
+            ].map((im) => (
+              <div key={im.src} className={`group relative overflow-hidden rounded-3xl border border-border bg-muted shadow-sm ${im.cls}`}>
+                <img src={im.src} alt={im.tag} loading="lazy" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-ink/70 to-transparent" />
+                <span className="absolute left-3 top-3 rounded-full bg-white/95 px-2.5 py-1 text-[10px] font-black uppercase tracking-wider text-ink shadow-sm">
+                  {im.tag}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
 
 
       {/* CTA */}
