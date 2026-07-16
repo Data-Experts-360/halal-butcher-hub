@@ -3,7 +3,7 @@ import { AccentHeading } from "@/components/AccentHeading";
 import { ProductCard } from "@/components/ProductCard";
 import { PRODUCTS } from "@/lib/products";
 import { Button } from "@/components/ui/button";
-import { BadgeCheck, Beef, Clock, CreditCard, Leaf, ShieldCheck, Sparkles, Truck } from "lucide-react";
+import { BadgeCheck, Beef, Clock, CreditCard, Leaf, MapPin, Phone, ShieldCheck, Sparkles, Truck } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -321,6 +321,87 @@ function Home() {
             <Link to="/shop-meat">
               <Button size="lg" variant="outline">Start shopping</Button>
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* VISIT US — Map */}
+      <section className="relative overflow-hidden bg-clay-canvas py-24">
+        <div aria-hidden className="pointer-events-none absolute -left-24 top-20 h-72 w-72 rounded-full bg-meat/20 blur-3xl" />
+        <div aria-hidden className="pointer-events-none absolute -right-20 bottom-10 h-80 w-80 rounded-full bg-amber-200/40 blur-3xl" />
+
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-2xl text-center">
+            <span className="inline-block rounded-full clay-number px-4 py-1.5 text-[11px] font-black uppercase tracking-[0.2em] text-meat">
+              Visit us
+            </span>
+            <AccentHeading
+              as="h2"
+              text="Find us on the map"
+              accentIndex={3}
+              className="mt-5 text-4xl sm:text-5xl lg:text-6xl"
+            />
+            <p className="mx-auto mt-5 max-w-lg text-lg text-muted-foreground">
+              Swing by the shop for same-day pickup, custom cuts, or a chat with our butchers.
+            </p>
+          </div>
+
+          <div className="mt-14 grid gap-10 lg:grid-cols-[1fr_1.4fr] lg:items-stretch">
+            {/* Store details card */}
+            <div className="clay-surface flex flex-col justify-center p-8 sm:p-10">
+              <div className="flex items-center gap-4">
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center clay-meat">
+                  <MapPin className="h-7 w-7 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-extrabold text-ink">PA Halal Butcher & Grocer</h3>
+                  <p className="text-sm text-muted-foreground">Shop 6, 429 Logan Road, Greenslopes QLD 4120</p>
+                </div>
+              </div>
+
+              <div className="mt-8 space-y-5">
+                <div className="flex items-start gap-4">
+                  <Clock className="mt-0.5 h-5 w-5 shrink-0 text-meat" />
+                  <div>
+                    <p className="font-semibold text-ink">Open today</p>
+                    <p className="text-sm text-muted-foreground">8:00 AM – 8:00 PM</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <Phone className="mt-0.5 h-5 w-5 shrink-0 text-meat" />
+                  <div>
+                    <p className="font-semibold text-ink">Call ahead</p>
+                    <p className="text-sm text-muted-foreground">(07) 3397 1234</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-8">
+                <a
+                  href="https://www.google.com/maps/dir//PA+Halal+Butcher+%26+Grocer"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Button size="lg" className="w-full bg-meat text-white hover:bg-meat-dark sm:w-auto">
+                    Get directions
+                  </Button>
+                </a>
+              </div>
+            </div>
+
+            {/* Map embed */}
+            <div className="clay-image-frame min-h-[360px] overflow-hidden sm:min-h-[420px] lg:min-h-full">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3539.0240948924547!2d153.0357803!3d-27.4996261!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6b915a67a4a6fd1b%3A0xdf7bd22deea2032a!2sPA%20Halal%20Butcher%20%26%20Grocer!5e0!3m2!1sen!2s!4v1784191899320!5m2!1sen!2s"
+                width="100%"
+                height="100%"
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="strict-origin-when-cross-origin"
+                title="PA Halal Butcher & Grocer location"
+                className="block h-full min-h-[360px] w-full rounded-3xl sm:min-h-[420px] lg:min-h-full"
+              />
+            </div>
           </div>
         </div>
       </section>
