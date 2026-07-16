@@ -298,6 +298,50 @@ function Home() {
         </div>
       </section>
 
+      {/* MASONRY GALLERY — Straight from our counter */}
+      <section className="relative overflow-hidden bg-background py-24">
+        <div aria-hidden className="pointer-events-none absolute left-1/2 top-0 h-64 w-64 -translate-x-1/2 rounded-full bg-meat/10 blur-3xl" />
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-wrap items-end justify-between gap-6">
+            <div className="max-w-xl">
+              <span className="text-xs font-bold uppercase tracking-[0.2em] text-meat">Straight from our counter</span>
+              <AccentHeading
+                as="h2"
+                text="A peek inside the shop"
+                accentIndex={2}
+                className="mt-3 text-4xl sm:text-5xl"
+              />
+              <p className="mt-4 text-muted-foreground">
+                Real cuts, real people, real Zabiha. Every photo is from our own counter — no stock, no filters.
+              </p>
+            </div>
+            <div className="hidden items-center gap-3 rounded-full border border-border bg-card px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-ink sm:inline-flex">
+              <span className="h-2 w-2 rounded-full bg-meat" /> Updated weekly
+            </div>
+          </div>
+
+          <div className="mt-12 grid grid-cols-2 gap-4 sm:gap-5 md:grid-cols-4">
+            {[
+              { src: "/gmb-images/pa-butcherand-gorcers3.webp", cls: "row-span-2 aspect-[3/5]", tag: "Beef" },
+              { src: "/gmb-images/pa-butcherand-gorcers12.webp", cls: "aspect-square", tag: "Lamb" },
+              { src: "/gmb-images/pa-butcherand-gorcers21.webp", cls: "aspect-square", tag: "Prep" },
+              { src: "/gmb-images/pa-butcherand-gorcers7.webp", cls: "row-span-2 aspect-[3/5]", tag: "BBQ" },
+              { src: "/gmb-images/pa-butcherand-gorcers18.webp", cls: "aspect-square", tag: "Fresh" },
+              { src: "/gmb-images/pa-butcherand-gorcers29.webp", cls: "aspect-square", tag: "Counter" },
+            ].map((im) => (
+              <div key={im.src} className={`group relative overflow-hidden rounded-3xl border border-border bg-muted shadow-sm ${im.cls}`}>
+                <img src={im.src} alt={im.tag} loading="lazy" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-ink/70 to-transparent" />
+                <span className="absolute left-3 top-3 rounded-full bg-white/95 px-2.5 py-1 text-[10px] font-black uppercase tracking-wider text-ink shadow-sm">
+                  {im.tag}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+
 
       {/* CTA */}
       <section className="bg-background py-20">
