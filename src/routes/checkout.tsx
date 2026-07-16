@@ -79,7 +79,10 @@ function Checkout() {
     if (typeof window !== "undefined") sessionStorage.setItem("pa-last-order", JSON.stringify(order));
     addOrder(order);
 
-    if (user) addPoints(pointsEarned);
+    if (user) {
+      if (clampedPoints > 0) addPoints(-clampedPoints);
+      addPoints(pointsEarned);
+    }
     clearCart();
     toast.success("Payment successful");
     navigate({ to: "/success" });
