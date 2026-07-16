@@ -212,6 +212,74 @@ function Home() {
         </div>
       </section>
 
+      {/* AD BANNER — Weekly special split */}
+      <section className="bg-background pb-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="relative overflow-hidden rounded-[2rem] bg-ink text-white shadow-xl">
+            <div className="grid gap-0 lg:grid-cols-[1.15fr_1fr]">
+              {/* copy */}
+              <div className="relative z-10 flex flex-col justify-center p-8 sm:p-12 lg:p-16">
+                <span className="inline-flex w-fit items-center gap-2 rounded-full bg-meat/20 px-3.5 py-1.5 text-[11px] font-black uppercase tracking-[0.2em] text-meat">
+                  <Sparkles className="h-3.5 w-3.5" /> This week at the counter
+                </span>
+                <h2 className="mt-5 text-4xl font-black leading-[1.05] sm:text-5xl lg:text-6xl">
+                  Whole lamb, <span className="text-meat">custom cut</span> — free of charge.
+                </h2>
+                <p className="mt-5 max-w-md text-white/70">
+                  Order a whole or half lamb this week and we'll break it down exactly the way your kitchen needs — chops, mince, curry cut, roast — at no extra cost.
+                </p>
+                <div className="mt-8 flex flex-wrap items-center gap-4">
+                  <Link to="/shop-meat">
+                    <Button size="lg" className="bg-meat text-white hover:bg-meat-dark">
+                      Reserve your lamb
+                    </Button>
+                  </Link>
+                  <div className="flex items-center gap-3 text-sm text-white/70">
+                    <BadgeCheck className="h-5 w-5 text-meat" />
+                    Cut fresh, packed clean
+                  </div>
+                </div>
+              </div>
+
+              {/* framed image collage */}
+              <div className="relative min-h-[320px] lg:min-h-[520px]">
+                <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-r from-ink via-ink/40 to-transparent lg:from-ink/80 lg:via-transparent" />
+                <img
+                  src="/gmb-images/pa-butcherand-gorcers5.webp"
+                  alt="Butcher preparing lamb"
+                  loading="lazy"
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
+                {/* floating framed thumbs */}
+                <div className="absolute bottom-6 right-6 hidden gap-3 sm:flex">
+                  {["/gmb-images/pa-butcherand-gorcers14.webp", "/gmb-images/pa-butcherand-gorcers23.webp"].map((s, i) => (
+                    <div
+                      key={s}
+                      className="h-24 w-24 overflow-hidden rounded-2xl border-4 border-white/90 shadow-2xl"
+                      style={{ transform: `rotate(${i === 0 ? -6 : 5}deg)` }}
+                    >
+                      <img src={s} alt="" loading="lazy" className="h-full w-full object-cover" />
+                    </div>
+                  ))}
+                </div>
+                {/* price tag */}
+                <div className="absolute left-6 top-6 flex items-center gap-3 rounded-2xl bg-white/95 p-3 pr-5 text-ink shadow-2xl backdrop-blur">
+                  <div className="grid h-11 w-11 place-items-center rounded-xl bg-meat text-white">
+                    <Beef className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Save</div>
+                    <div className="text-base font-black leading-tight">Up to $40 in cutting fees</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+
       {/* HOW IT WORKS — Claymorphism */}
       <section className="relative overflow-hidden bg-clay-canvas py-24">
         {/* floating blobs */}
