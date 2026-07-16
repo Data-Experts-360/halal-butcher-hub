@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useShop, cartTotal } from "@/lib/store";
-import { Beef, CalendarDays, Clock, CreditCard, Lock, Minus, Plus, Sparkles, Trash2 } from "lucide-react";
+import { Beef, CalendarDays, Clock, CreditCard, Gift, Lock, Minus, Plus, Sparkles, Trash2, X } from "lucide-react";
 
 export const Route = createFileRoute("/checkout")({
   head: () => ({
@@ -37,10 +37,18 @@ function Checkout() {
 
   const [card, setCard] = useState({ name: user?.name ?? "", number: "4242 4242 4242 4242", exp: "12/28", cvc: "123" });
   const [processing, setProcessing] = useState(false);
+  const [pointsToRedeem, setPointsToRedeem] = useState(0);
 
+  const POINTS_PER_DOLLAR = 100; // 100 pts = $1
   const subtotal = cartTotal(cart);
   const tax = subtotal * 0.06;
-  const total = subtotal + tax;
+  const preDiscountTotal = subtotal + tax;
+  const maxRedeemable = user
+    ? Math.min(user.points, Math.floor(preDiscountTotal * POINTS_PER_DOLLAR))
+    : 0;
+  const clampedPoints = Math.max(0, Math.min(pointsToRedeem, maxRedeemable));
+  const discount = clampedPoints / POINTS_PER_DOLLAR;
+  const total = Math.max(0, preDiscountTotal - discount);
   const pointsEarned = Math.floor(total);
 
   const fmtQty = (q: number, unit: string) =>
@@ -71,7 +79,10 @@ function Checkout() {
     if (typeof window !== "undefined") sessionStorage.setItem("pa-last-order", JSON.stringify(order));
     addOrder(order);
 
-    if (user) addPoints(pointsEarned);
+    if (user) {
+      if (clampedPoints > 0) addPoints(-clampedPoints);
+      addPoints(pointsEarned);
+    }
     clearCart();
     toast.success("Payment successful");
     navigate({ to: "/success" });
@@ -234,11 +245,72 @@ function Checkout() {
               <span className="text-muted-foreground">Pickup</span>
               <span className="font-semibold text-ink">Free</span>
             </div>
+            {clampedPoints > 0 && (
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Points discount</span>
+                <span className="font-semibold text-meat">−${discount.toFixed(2)}</span>
+              </div>
+            )}
           </div>
+
+          {user && user.points > 0 && (
+            <div className="rounded-xl border border-meat/30 bg-accent/50 p-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Gift className="h-4 w-4 text-meat" />
+                  <span className="text-sm font-bold text-ink">Use your points</span>
+                </div>
+                <span className="text-xs font-semibold text-muted-foreground">
+                  {user.points} pts available
+                </span>
+              </div>
+              <p className="mt-1 text-xs text-muted-foreground">
+                {POINTS_PER_DOLLAR} pts = $1 off · up to ${(maxRedeemable / POINTS_PER_DOLLAR).toFixed(2)}
+              </p>
+              <div className="mt-3 flex items-center gap-2">
+                <Input
+                  type="number"
+                  min={0}
+                  max={maxRedeemable}
+                  step={POINTS_PER_DOLLAR}
+                  value={pointsToRedeem}
+                  onChange={(e) => setPointsToRedeem(Number(e.target.value) || 0)}
+                  className="h-9 focus-visible:ring-meat"
+                  placeholder="0"
+                />
+                <Button
+                  type="button"
+                  size="sm"
+                  onClick={() => setPointsToRedeem(maxRedeemable)}
+                  className="h-9 bg-meat text-white hover:bg-meat-dark"
+                >
+                  Max
+                </Button>
+                {clampedPoints > 0 && (
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setPointsToRedeem(0)}
+                    className="h-9"
+                  >
+                    <X className="h-3.5 w-3.5" />
+                  </Button>
+                )}
+              </div>
+              {clampedPoints > 0 && (
+                <p className="mt-2 text-xs font-semibold text-meat-dark">
+                  Redeeming {clampedPoints} pts for ${discount.toFixed(2)} off
+                </p>
+              )}
+            </div>
+          )}
+
           <div className="flex items-baseline justify-between">
             <span className="text-sm font-bold uppercase tracking-wider text-ink">Total</span>
             <span className="text-3xl font-black text-meat">${total.toFixed(2)}</span>
           </div>
+
 
           <div className="flex items-start gap-2 rounded-xl border border-meat/30 bg-accent p-3 text-sm">
             <Sparkles className="mt-0.5 h-4 w-4 shrink-0 text-meat" />
