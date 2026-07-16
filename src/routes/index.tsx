@@ -186,6 +186,54 @@ function Home() {
         </div>
       </section>
 
+      {/* POLAROID STRIP — Moments from the shop */}
+      <section className="relative overflow-hidden bg-clay-canvas py-20">
+        <div aria-hidden className="pointer-events-none absolute -left-20 top-10 h-72 w-72 rounded-full bg-amber-200/40 blur-3xl" />
+        <div aria-hidden className="pointer-events-none absolute -right-16 bottom-0 h-72 w-72 rounded-full bg-meat/15 blur-3xl" />
+
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-2xl text-center">
+            <span className="inline-block rounded-full clay-number px-4 py-1.5 text-[11px] font-black uppercase tracking-[0.2em] text-meat">
+              Snapshots
+            </span>
+            <AccentHeading
+              as="h2"
+              text="Moments from the shop"
+              accentIndex={2}
+              className="mt-5 text-4xl sm:text-5xl"
+            />
+          </div>
+
+          <div className="mt-14 flex flex-wrap items-center justify-center gap-6 sm:gap-8">
+            {[
+              { src: "/gmb-images/pa-butcherand-gorcers1.webp", cap: "Morning cut", rot: -6, mt: 0 },
+              { src: "/gmb-images/pa-butcherand-gorcers9.webp", cap: "Fresh in", rot: 4, mt: 24 },
+              { src: "/gmb-images/pa-butcherand-gorcers16.webp", cap: "House blend", rot: -3, mt: -12 },
+              { src: "/gmb-images/pa-butcherand-gorcers25.webp", cap: "Counter classics", rot: 6, mt: 18 },
+              { src: "/gmb-images/pa-butcherand-gorcers33.webp", cap: "Weekend prep", rot: -5, mt: -6 },
+            ].map((p) => (
+              <div
+                key={p.src}
+                style={{ transform: `rotate(${p.rot}deg)`, marginTop: p.mt }}
+                className="group relative w-40 rounded-lg bg-white p-2.5 pb-9 shadow-[0_18px_40px_-12px_rgba(0,0,0,0.25)] transition-transform duration-300 hover:!rotate-0 hover:-translate-y-1 sm:w-48"
+              >
+                <img
+                  src={p.src}
+                  alt={p.cap}
+                  loading="lazy"
+                  className="aspect-square w-full rounded-sm object-cover"
+                />
+                <span className="absolute inset-x-0 bottom-2 text-center font-[cursive] text-sm text-ink/80">
+                  {p.cap}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+
+
       {/* FEATURED PRODUCTS */}
       <section className="bg-background py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
