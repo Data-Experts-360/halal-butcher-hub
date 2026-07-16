@@ -33,7 +33,7 @@ export interface Order {
   pointsEarned: number;
   pickup: string;
   items: OrderItem[];
-  status: "pending" | "ready" | "completed" | "cancelled";
+  status: "pending" | "ready" | "handed_over" | "completed" | "cancelled";
   createdAt: number;
 }
 
