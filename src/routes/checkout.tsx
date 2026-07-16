@@ -37,10 +37,18 @@ function Checkout() {
 
   const [card, setCard] = useState({ name: user?.name ?? "", number: "4242 4242 4242 4242", exp: "12/28", cvc: "123" });
   const [processing, setProcessing] = useState(false);
+  const [pointsToRedeem, setPointsToRedeem] = useState(0);
 
+  const POINTS_PER_DOLLAR = 100; // 100 pts = $1
   const subtotal = cartTotal(cart);
   const tax = subtotal * 0.06;
-  const total = subtotal + tax;
+  const preDiscountTotal = subtotal + tax;
+  const maxRedeemable = user
+    ? Math.min(user.points, Math.floor(preDiscountTotal * POINTS_PER_DOLLAR))
+    : 0;
+  const clampedPoints = Math.max(0, Math.min(pointsToRedeem, maxRedeemable));
+  const discount = clampedPoints / POINTS_PER_DOLLAR;
+  const total = Math.max(0, preDiscountTotal - discount);
   const pointsEarned = Math.floor(total);
 
   const fmtQty = (q: number, unit: string) =>
