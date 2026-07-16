@@ -3,7 +3,7 @@ import { AccentHeading } from "@/components/AccentHeading";
 import { ProductCard } from "@/components/ProductCard";
 import { PRODUCTS } from "@/lib/products";
 import { Button } from "@/components/ui/button";
-import { BadgeCheck, Beef, Clock, CreditCard, Leaf, ShieldCheck, Sparkles, Truck } from "lucide-react";
+import { BadgeCheck, Beef, Clock, CreditCard, Leaf, MapPin, Phone, ShieldCheck, Sparkles, Truck } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
