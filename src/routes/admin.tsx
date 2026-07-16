@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useShop, ADMIN_EMAIL, ADMIN_PASSWORD, type AdminProduct } from "@/lib/store";
 import { PRODUCTS } from "@/lib/products";
+import logoAsset from "@/assets/pa-logo.png.asset.json";
 
 export const Route = createFileRoute("/admin")({
   head: () => ({
@@ -81,8 +82,8 @@ function AdminLogin() {
 
       <div className="relative mx-auto flex min-h-screen max-w-md flex-col items-center justify-center px-6 py-16">
         {/* Logo badge */}
-        <div className="clay-meat animate-clay-float mb-8 grid h-20 w-20 place-items-center rounded-3xl">
-          <Shield className="h-10 w-10 text-white" />
+        <div className="animate-clay-float mb-8 h-20 w-20 overflow-hidden rounded-full shadow-lg ring-4 ring-white/60">
+          <img src={logoAsset.url} alt="PA Halal" className="h-full w-full object-cover" />
         </div>
 
         <div className="clay-surface w-full rounded-[2rem] p-8 sm:p-10">
@@ -179,9 +180,7 @@ function AdminShell() {
       {/* Sidebar */}
       <aside className="hidden w-64 shrink-0 flex-col border-r border-border bg-white md:flex">
         <div className="flex h-16 items-center gap-2 border-b border-border px-6">
-          <div className="grid h-9 w-9 place-items-center rounded-lg bg-meat">
-            <Beef className="h-5 w-5 text-white" />
-          </div>
+          <img src={logoAsset.url} alt="PA Halal" className="h-9 w-9 rounded-full object-cover" />
           <div>
             <div className="text-sm font-black leading-tight text-ink">PA Halal</div>
             <div className="text-[10px] font-bold uppercase tracking-wider text-meat">
@@ -228,9 +227,7 @@ function AdminShell() {
         {/* Mobile top bar */}
         <header className="flex h-16 items-center justify-between border-b border-border bg-white px-4 md:hidden">
           <div className="flex items-center gap-2">
-            <div className="grid h-8 w-8 place-items-center rounded-lg bg-meat">
-              <Beef className="h-4 w-4 text-white" />
-            </div>
+            <img src={logoAsset.url} alt="PA Halal" className="h-8 w-8 rounded-full object-cover" />
             <span className="font-black text-ink">PA Admin</span>
           </div>
           <button

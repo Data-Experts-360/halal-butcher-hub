@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useShop, cartCount } from "@/lib/store";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import logoAsset from "@/assets/pa-logo.png.asset.json";
 
 const NAV = [
   { to: "/", label: "Home" },
@@ -24,9 +25,7 @@ export function Navbar() {
     <header className="sticky top-0 z-40 border-b border-border/70 bg-background/80 backdrop-blur-lg">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
         <Link to="/" className="flex items-center gap-2.5 shrink-0">
-          <span className="grid h-9 w-9 place-items-center rounded-lg bg-meat text-white font-black">
-            PA
-          </span>
+          <img src={logoAsset.url} alt="PA Halal Butcher & Grocer" className="h-10 w-10 rounded-full object-cover shadow-sm" />
           <span className="hidden text-sm font-bold leading-tight sm:flex sm:flex-col">
             <span className="text-ink">PA Halal</span>
             <span className="text-meat -mt-0.5">Butcher & Grocer</span>
