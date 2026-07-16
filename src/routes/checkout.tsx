@@ -39,7 +39,7 @@ function Checkout() {
   const [processing, setProcessing] = useState(false);
   const [pointsToRedeem, setPointsToRedeem] = useState(0);
 
-  const POINTS_PER_DOLLAR = 100; // 100 pts = $1
+  const POINTS_PER_DOLLAR = 5; // 50 pts = $10 → 5 pts = $1
   const subtotal = cartTotal(cart);
   const tax = subtotal * 0.06;
   const preDiscountTotal = subtotal + tax;
@@ -49,7 +49,8 @@ function Checkout() {
   const clampedPoints = Math.max(0, Math.min(pointsToRedeem, maxRedeemable));
   const discount = clampedPoints / POINTS_PER_DOLLAR;
   const total = Math.max(0, preDiscountTotal - discount);
-  const pointsEarned = Math.floor(total);
+  // Earn 5 points per full $100 spent
+  const pointsEarned = Math.floor(total / 100) * 5;
 
   const fmtQty = (q: number, unit: string) =>
     unit === "lb" ? `${q} lb` : `${q} × ${unit}`;
@@ -265,14 +266,14 @@ function Checkout() {
                 </span>
               </div>
               <p className="mt-1 text-xs text-muted-foreground">
-                {POINTS_PER_DOLLAR} pts = $1 off · up to ${(maxRedeemable / POINTS_PER_DOLLAR).toFixed(2)}
+                50 pts = $10 off · up to ${(maxRedeemable / POINTS_PER_DOLLAR).toFixed(2)}
               </p>
               <div className="mt-3 flex items-center gap-2">
                 <Input
                   type="number"
                   min={0}
                   max={maxRedeemable}
-                  step={POINTS_PER_DOLLAR}
+                  step={50}
                   value={pointsToRedeem}
                   onChange={(e) => setPointsToRedeem(Number(e.target.value) || 0)}
                   className="h-9 focus-visible:ring-meat"
