@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import logoAsset from "@/assets/pa-logo.png.asset.json";
+const logoUrl = "/pa-logo.png";
 
 export function Footer() {
   return (
@@ -7,7 +7,7 @@ export function Footer() {
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 lg:grid-cols-4 lg:px-8">
         <div>
           <div className="flex items-center gap-2.5">
-            <img src={logoAsset.url} alt="PA Halal" className="h-10 w-10 rounded-full object-cover ring-2 ring-white/10" />
+            <img src={logoUrl} alt="PA Halal" className="h-10 w-10 rounded-full object-cover ring-2 ring-white/10" />
             <span className="flex flex-col text-sm font-bold leading-tight">
               <span>PA Halal</span>
               <span className="text-meat -mt-0.5">Butcher & Grocer</span>
