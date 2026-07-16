@@ -245,11 +245,72 @@ function Checkout() {
               <span className="text-muted-foreground">Pickup</span>
               <span className="font-semibold text-ink">Free</span>
             </div>
+            {clampedPoints > 0 && (
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Points discount</span>
+                <span className="font-semibold text-meat">−${discount.toFixed(2)}</span>
+              </div>
+            )}
           </div>
+
+          {user && user.points > 0 && (
+            <div className="rounded-xl border border-meat/30 bg-accent/50 p-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Gift className="h-4 w-4 text-meat" />
+                  <span className="text-sm font-bold text-ink">Use your points</span>
+                </div>
+                <span className="text-xs font-semibold text-muted-foreground">
+                  {user.points} pts available
+                </span>
+              </div>
+              <p className="mt-1 text-xs text-muted-foreground">
+                {POINTS_PER_DOLLAR} pts = $1 off · up to ${(maxRedeemable / POINTS_PER_DOLLAR).toFixed(2)}
+              </p>
+              <div className="mt-3 flex items-center gap-2">
+                <Input
+                  type="number"
+                  min={0}
+                  max={maxRedeemable}
+                  step={POINTS_PER_DOLLAR}
+                  value={pointsToRedeem}
+                  onChange={(e) => setPointsToRedeem(Number(e.target.value) || 0)}
+                  className="h-9 focus-visible:ring-meat"
+                  placeholder="0"
+                />
+                <Button
+                  type="button"
+                  size="sm"
+                  onClick={() => setPointsToRedeem(maxRedeemable)}
+                  className="h-9 bg-meat text-white hover:bg-meat-dark"
+                >
+                  Max
+                </Button>
+                {clampedPoints > 0 && (
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setPointsToRedeem(0)}
+                    className="h-9"
+                  >
+                    <X className="h-3.5 w-3.5" />
+                  </Button>
+                )}
+              </div>
+              {clampedPoints > 0 && (
+                <p className="mt-2 text-xs font-semibold text-meat-dark">
+                  Redeeming {clampedPoints} pts for ${discount.toFixed(2)} off
+                </p>
+              )}
+            </div>
+          )}
+
           <div className="flex items-baseline justify-between">
             <span className="text-sm font-bold uppercase tracking-wider text-ink">Total</span>
             <span className="text-3xl font-black text-meat">${total.toFixed(2)}</span>
           </div>
+
 
           <div className="flex items-start gap-2 rounded-xl border border-meat/30 bg-accent p-3 text-sm">
             <Sparkles className="mt-0.5 h-4 w-4 shrink-0 text-meat" />
