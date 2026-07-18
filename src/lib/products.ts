@@ -1,6 +1,6 @@
 import lambChopsImg from "@/assets/lamb-chops.jpg";
 import groundBeefImg from "@/assets/ground-beef.jpg";
-import shanTandooriAsset from "@/assets/shan-tandoori.jpg.asset.json";
+const shanTandooriUrl = "/__l5e/assets-v1/1ecc52ce-c30d-4728-99c8-15e31f89fd44/shan-tandoori.jpg";
 import shanBiryaniImg from "@/assets/shan-biryani.jpg";
 import shanKarahiImg from "@/assets/shan-karahi.jpg";
 import shanNihariImg from "@/assets/shan-nihari.jpg";
