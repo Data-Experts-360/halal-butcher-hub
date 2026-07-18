@@ -1,11 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useRef } from "react";
 import { AccentHeading } from "@/components/AccentHeading";
 import { ProductCard } from "@/components/ProductCard";
 import { PRODUCTS } from "@/lib/products";
 import { Button } from "@/components/ui/button";
 import aboutVideoAsset from "@/assets/about-video.mp4.asset.json";
 import aboutPosterAsset from "@/assets/about-poster.jpg.asset.json";
-import { BadgeCheck, Beef, Clock, CreditCard, Leaf, MapPin, Phone, Quote, ShieldCheck, Sparkles, Star, Truck } from "lucide-react";
+import { BadgeCheck, Beef, ChevronLeft, ChevronRight, Clock, CreditCard, Leaf, MapPin, Phone, Quote, ShieldCheck, Sparkles, Star, Truck } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
