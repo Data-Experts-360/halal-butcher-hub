@@ -94,7 +94,7 @@ export const PRODUCTS: Product[] = [
 
   // GROCERY — Shan Masala range
   { id: "shan-tandoori", name: "Shan Tandoori Masala", category: "grocery", group: "grocery", subcategory: "BBQ & Tandoori", price: 3.99, unit: "50g box",
-    image: shanTandooriAsset.url,
+    image: shanTandooriUrl,
     description: "Authentic Shan Tandoori recipe & seasoning mix — the classic smoky-red marinade for chicken, lamb chops, and paneer." },
   { id: "shan-biryani", name: "Shan Biryani Masala", category: "grocery", group: "grocery", subcategory: "Biryani & Rice", price: 4.49, unit: "50g box",
     image: shanBiryaniImg,
