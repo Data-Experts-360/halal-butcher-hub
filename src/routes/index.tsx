@@ -3,7 +3,7 @@ import { AccentHeading } from "@/components/AccentHeading";
 import { ProductCard } from "@/components/ProductCard";
 import { PRODUCTS } from "@/lib/products";
 import { Button } from "@/components/ui/button";
-import { BadgeCheck, Beef, Clock, CreditCard, Leaf, MapPin, Phone, ShieldCheck, Sparkles, Truck } from "lucide-react";
+import { BadgeCheck, Beef, Clock, CreditCard, Leaf, MapPin, Phone, Quote, ShieldCheck, Sparkles, Star, Truck } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -458,6 +458,131 @@ function Home() {
       </section>
 
 
+      {/* TESTIMONIALS */}
+      <section className="relative overflow-hidden bg-clay-canvas py-24">
+        <div aria-hidden className="pointer-events-none absolute -left-24 top-10 h-80 w-80 rounded-full bg-meat/15 blur-3xl" />
+        <div aria-hidden className="pointer-events-none absolute -right-20 bottom-10 h-96 w-96 rounded-full bg-amber-200/40 blur-3xl" />
+
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-3xl text-center">
+            <span className="inline-flex items-center gap-2 clay-pill px-4 py-2 text-[11px] font-black uppercase tracking-[0.2em] text-meat">
+              <Star className="h-3.5 w-3.5 fill-meat text-meat" />
+              Loved by Brisbane
+            </span>
+            <AccentHeading
+              as="h2"
+              text="What our customers say"
+              accentIndex={3}
+              className="mt-5 text-4xl sm:text-5xl lg:text-6xl"
+            />
+
+            {/* rating summary */}
+            <div className="mt-8 inline-flex flex-wrap items-center justify-center gap-6 clay-surface px-8 py-5">
+              <div className="text-left">
+                <div className="flex items-center gap-1">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Star key={i} className="h-5 w-5 fill-meat text-meat" />
+                  ))}
+                </div>
+                <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                  Rated by 500+ happy customers
+                </p>
+              </div>
+              <div className="hidden h-10 w-px bg-border sm:block" />
+              <div className="text-left">
+                <p className="text-3xl font-black text-ink">4.9<span className="text-lg text-muted-foreground">/5</span></p>
+                <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                  Average rating
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-14 grid gap-6 md:grid-cols-3">
+            {[
+              {
+                quote:
+                  "Freshest lamb chops in Brisbane, hands down. The team even trimmed and frenched them exactly how I asked. Weekly stop for our family now.",
+                name: "Aisha K.",
+                role: "Verified customer",
+                initials: "AK",
+                stars: 5,
+              },
+              {
+                quote:
+                  "I order Shan Nihari and their beef every Friday. Meat is always fresh, prices are fair, and the guys behind the counter are so welcoming.",
+                name: "Yusuf M.",
+                role: "Verified customer",
+                initials: "YM",
+                stars: 5,
+              },
+              {
+                quote:
+                  "One-stop shop — halal chicken, biryani masala, basmati, ghee. Pickup was ready exactly on time. Cannot recommend PA Halal enough.",
+                name: "Fatima R.",
+                role: "Verified customer",
+                initials: "FR",
+                stars: 5,
+              },
+              {
+                quote:
+                  "The tandoori marinade with their chicken thighs = restaurant-quality kebabs at home. Kids devour them. Zabiha certified is a huge plus.",
+                name: "Omar S.",
+                role: "Verified customer",
+                initials: "OS",
+                stars: 5,
+              },
+              {
+                quote:
+                  "Ordered a whole goat curry cut for Eid — perfectly portioned, delivered on the pickup slot. Professional and truly halal. Thank you PA Halal!",
+                name: "Sana H.",
+                role: "Verified customer",
+                initials: "SH",
+                stars: 5,
+              },
+              {
+                quote:
+                  "Best butcher we've found since moving to Woolloongabba. Ground beef is genuinely lean, and the Shan masala range is fully stocked.",
+                name: "Bilal A.",
+                role: "Verified customer",
+                initials: "BA",
+                stars: 4,
+              },
+            ].map((t, i) => (
+              <article
+                key={i}
+                className="group relative clay-surface flex flex-col p-7 transition-transform duration-500 hover:-translate-y-1"
+              >
+                <Quote
+                  aria-hidden
+                  className="absolute right-5 top-5 h-10 w-10 text-meat/15"
+                  strokeWidth={2.5}
+                />
+                <div className="flex items-center gap-1">
+                  {Array.from({ length: 5 }).map((_, s) => (
+                    <Star
+                      key={s}
+                      className={`h-4 w-4 ${s < t.stars ? "fill-meat text-meat" : "text-ink/15"}`}
+                    />
+                  ))}
+                </div>
+                <p className="mt-4 flex-1 text-[15px] leading-relaxed text-ink/85">
+                  "{t.quote}"
+                </p>
+                <div className="mt-6 flex items-center gap-3 border-t border-border/60 pt-5">
+                  <div className="grid h-11 w-11 place-items-center rounded-full clay-meat text-sm font-black text-white">
+                    {t.initials}
+                  </div>
+                  <div>
+                    <p className="text-sm font-bold text-ink">{t.name}</p>
+                    <p className="text-xs text-muted-foreground">{t.role}</p>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* CTA */}
       <section className="bg-background py-20">
