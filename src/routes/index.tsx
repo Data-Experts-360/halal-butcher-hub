@@ -349,6 +349,9 @@ function Home() {
         </div>
       </section>
 
+      {/* GROCERY PICKS — One from every aisle */}
+      <GroceryPicksRow />
+
       {/* AD BANNER — Weekly special split */}
       <section className="bg-background pb-8">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
