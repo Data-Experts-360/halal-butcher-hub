@@ -5,6 +5,7 @@ import { ProductCard } from "@/components/ProductCard";
 import { PRODUCTS } from "@/lib/products";
 import { Button } from "@/components/ui/button";
 import aboutVideoAsset from "@/assets/about-video.mp4.asset.json";
+import aboutPosterAsset from "@/assets/about-poster.jpg.asset.json";
 import { BadgeCheck, Beef, Clock, CreditCard, Leaf, MapPin, Pause, Phone, Play, Quote, ShieldCheck, Sparkles, Star, Truck } from "lucide-react";
 
 export const Route = createFileRoute("/")({
@@ -37,7 +38,8 @@ function AboutVideo() {
         <video
           ref={videoRef}
           src={aboutVideoAsset.url}
-          className="aspect-[4/3] w-full rounded-[1.5rem] object-cover"
+          poster={aboutPosterAsset.url}
+          className="aspect-[9/16] w-full max-h-[580px] rounded-[1.5rem] object-cover sm:aspect-[4/5]"
           playsInline
           preload="metadata"
           onPlay={() => setIsPlaying(true)}
