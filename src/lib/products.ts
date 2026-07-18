@@ -1,5 +1,15 @@
 import lambChopsImg from "@/assets/lamb-chops.jpg";
 import groundBeefImg from "@/assets/ground-beef.jpg";
+import shanTandooriAsset from "@/assets/shan-tandoori.jpg.asset.json";
+import shanBiryaniImg from "@/assets/shan-biryani.jpg";
+import shanKarahiImg from "@/assets/shan-karahi.jpg";
+import shanNihariImg from "@/assets/shan-nihari.jpg";
+import shanBombayImg from "@/assets/shan-bombay.jpg";
+import shanHaleemImg from "@/assets/shan-haleem.jpg";
+import shanKormaImg from "@/assets/shan-korma.jpg";
+import shanKababImg from "@/assets/shan-kabab.jpg";
+import shanPilauImg from "@/assets/shan-pilau.jpg";
+import shanChanaImg from "@/assets/shan-chana.jpg";
 
 export type Category = "beef" | "lamb" | "goat" | "chicken" | "grocery";
 export type Group = "meat" | "grocery";
@@ -82,31 +92,37 @@ export const PRODUCTS: Product[] = [
     description: "Party-size jumbo wings, perfect for grilling.",
     weights: [2, 3, 5], preparations: ["Whole", "Split"] },
 
-  // GROCERY
-  { id: "g-basmati", name: "Premium Basmati Rice", category: "grocery", group: "grocery", subcategory: "Rice & Grains", price: 24.99, unit: "10 lb bag",
-    image: img("photo-1586201375761-83865001e31c"),
-    description: "Aged long-grain basmati. Aromatic, fluffy every time." },
-  { id: "g-redlentil", name: "Red Lentils (Masoor Dal)", category: "grocery", group: "grocery", subcategory: "Lentils & Pulses", price: 6.49, unit: "2 lb",
-    image: img("photo-1515543904379-3d757afe72e4"),
-    description: "Quick-cooking split red lentils." },
-  { id: "g-garam", name: "House Garam Masala", category: "grocery", group: "grocery", subcategory: "Spices", price: 7.99, unit: "100g jar",
-    image: img("photo-1596040033229-a9821ebd058d"),
-    description: "Hand-blended in store, toasted whole spices." },
-  { id: "g-tikka", name: "Tikka Marinade", category: "grocery", group: "grocery", subcategory: "Halal Marinades", price: 5.99, unit: "350ml",
-    image: img("photo-1574484284002-952d92456975"),
-    description: "Yogurt-based marinade, ready to coat chicken or lamb." },
-  { id: "g-tahini", name: "Stone-Ground Tahini", category: "grocery", group: "grocery", subcategory: "Sauces", price: 9.99, unit: "500g" ,
-    image: img("photo-1599909533735-7e88e93f1c9c"),
-    description: "Single-origin Ethiopian sesame, no additives." },
-  { id: "g-laban", name: "Fresh Laban Yogurt", category: "grocery", group: "grocery", subcategory: "Dairy", price: 4.49, unit: "1 quart",
-    image: img("photo-1571212515416-fca325c4b8e2"),
-    description: "Traditional drinking yogurt, locally made." },
-  { id: "g-saffron", name: "Persian Saffron Threads", category: "grocery", group: "grocery", subcategory: "Spices", price: 18.99, unit: "2g tin",
-    image: img("photo-1599909533735-7e88e93f1c9c"),
-    description: "Grade A+ super negin saffron threads." },
-  { id: "g-ghee", name: "Pure Cow Ghee", category: "grocery", group: "grocery", subcategory: "Dairy", price: 12.49, unit: "500g jar",
-    image: img("photo-1628689469838-524a4a973b8e"),
-    description: "Slow-clarified, grass-fed cow ghee." },
+  // GROCERY — Shan Masala range
+  { id: "shan-tandoori", name: "Shan Tandoori Masala", category: "grocery", group: "grocery", subcategory: "BBQ & Tandoori", price: 3.99, unit: "50g box",
+    image: shanTandooriAsset.url,
+    description: "Authentic Shan Tandoori recipe & seasoning mix — the classic smoky-red marinade for chicken, lamb chops, and paneer." },
+  { id: "shan-biryani", name: "Shan Biryani Masala", category: "grocery", group: "grocery", subcategory: "Biryani & Rice", price: 4.49, unit: "50g box",
+    image: shanBiryaniImg,
+    description: "The signature Sindhi-style biryani spice mix — fragrant, layered, and perfectly balanced." },
+  { id: "shan-bombay", name: "Shan Bombay Biryani Masala", category: "grocery", group: "grocery", subcategory: "Biryani & Rice", price: 4.49, unit: "60g box",
+    image: shanBombayImg,
+    description: "Tangy, aromatic Bombay-style biryani blend with a subtle hint of dried plum." },
+  { id: "shan-pilau", name: "Shan Pilau Rice Masala", category: "grocery", group: "grocery", subcategory: "Biryani & Rice", price: 3.29, unit: "50g box",
+    image: shanPilauImg,
+    description: "Delicate whole-spice blend for that classic pulao aroma and taste." },
+  { id: "shan-karahi", name: "Shan Chicken Karahi Masala", category: "grocery", group: "grocery", subcategory: "Curry Mixes", price: 3.99, unit: "50g box",
+    image: shanKarahiImg,
+    description: "Bold, tomato-forward karahi mix — restaurant-style chicken in 20 minutes." },
+  { id: "shan-korma", name: "Shan Korma Masala", category: "grocery", group: "grocery", subcategory: "Curry Mixes", price: 3.99, unit: "50g box",
+    image: shanKormaImg,
+    description: "Rich, creamy korma blend perfect for chicken, lamb, or beef with yogurt and onions." },
+  { id: "shan-nihari", name: "Shan Nihari Masala", category: "grocery", group: "grocery", subcategory: "Curry Mixes", price: 4.29, unit: "60g box",
+    image: shanNihariImg,
+    description: "The classic slow-cooked beef nihari mix — deeply spiced, silky, and slow-braise ready." },
+  { id: "shan-haleem", name: "Shan Special Haleem Mix", category: "grocery", group: "grocery", subcategory: "Curry Mixes", price: 6.99, unit: "300g box",
+    image: shanHaleemImg,
+    description: "Includes lentils, wheat, barley and the signature Shan haleem spice sachet." },
+  { id: "shan-kabab", name: "Shan Kabab BBQ Masala", category: "grocery", group: "grocery", subcategory: "BBQ & Tandoori", price: 3.99, unit: "50g box",
+    image: shanKababImg,
+    description: "Seekh and shami kabab masala — smoky, garlicky, made for the grill." },
+  { id: "shan-chana", name: "Shan Chana Masala", category: "grocery", group: "grocery", subcategory: "Curry Mixes", price: 3.29, unit: "50g box",
+    image: shanChanaImg,
+    description: "Tangy chickpea curry mix with dried pomegranate and roasted cumin." },
 ];
 
 export const getProduct = (id: string) => PRODUCTS.find((p) => p.id === id);
