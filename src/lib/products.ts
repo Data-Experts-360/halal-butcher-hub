@@ -10,6 +10,12 @@ import shanKormaImg from "@/assets/shan-korma.jpg";
 import shanKababImg from "@/assets/shan-kabab.jpg";
 import shanPilauImg from "@/assets/shan-pilau.jpg";
 import shanChanaImg from "@/assets/shan-chana.jpg";
+import peakFreansLemonAsset from "@/assets/peak-freans-lemon.png.asset.json";
+import luTucImg from "@/assets/lu-tuc.jpg";
+import luPetitBeurreImg from "@/assets/lu-petit-beurre.jpg";
+import luPrinceImg from "@/assets/lu-prince.jpg";
+import peakFreansChocoImg from "@/assets/peak-freans-choco.jpg";
+import peakFreansChocChipImg from "@/assets/peak-freans-choc-chip.jpg";
 
 export type Category = "beef" | "lamb" | "goat" | "chicken" | "grocery";
 export type Group = "meat" | "grocery";
