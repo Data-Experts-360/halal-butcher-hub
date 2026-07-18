@@ -1,9 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useRef, useState } from "react";
 import { AccentHeading } from "@/components/AccentHeading";
 import { ProductCard } from "@/components/ProductCard";
 import { PRODUCTS } from "@/lib/products";
 import { Button } from "@/components/ui/button";
-import { BadgeCheck, Beef, Clock, CreditCard, Leaf, MapPin, Phone, Quote, ShieldCheck, Sparkles, Star, Truck } from "lucide-react";
+import aboutVideoAsset from "@/assets/about-video.mp4.asset.json";
+import { BadgeCheck, Beef, Clock, CreditCard, Leaf, MapPin, Pause, Phone, Play, Quote, ShieldCheck, Sparkles, Star, Truck } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -136,52 +138,42 @@ function Home() {
       </section>
 
       {/* ABOUT */}
-      <section className="relative bg-cattle-pattern py-20">
-        <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:px-8 lg:items-center">
-          <div className="relative">
-            <img
-              src="https://images.unsplash.com/photo-1605522561233-768ad7a8fabf?auto=format&fit=crop&w=1200&q=80"
-              alt="Butcher at work"
-              className="aspect-[4/5] w-full rounded-3xl object-cover shadow-2xl"
-            />
-            <div className="absolute -bottom-6 -right-4 rounded-2xl border border-border bg-card p-5 shadow-xl sm:-right-6">
-              <div className="flex items-center gap-3">
-                <BadgeCheck className="h-10 w-10 text-meat" />
-                <div>
-                  <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">HMS Certified</div>
-                  <div className="text-base font-bold text-ink">Since 1996</div>
-                </div>
-              </div>
+      <section className="relative overflow-hidden bg-cattle-pattern py-20 lg:py-28">
+        <div className="pointer-events-none absolute -left-24 top-0 h-80 w-80 rounded-full bg-meat/10 blur-3xl" aria-hidden />
+        <div className="pointer-events-none absolute -right-20 bottom-0 h-72 w-72 rounded-full bg-amber-200/40 blur-3xl" aria-hidden />
+
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+            <AboutVideo />
+            <div>
+              <span className="text-xs font-bold uppercase tracking-[0.2em] text-meat">About PA Halal</span>
+              <AccentHeading
+                as="h2"
+                text="Three generations. One standard."
+                accentIndex={1}
+                className="mt-3 text-4xl sm:text-5xl"
+              />
+              <p className="mt-6 text-lg text-muted-foreground">
+                We started as a single counter on Market Street in 1996. Three decades
+                later, we still butcher in-house, by hand, with the same care our
+                grandfather insisted on. Every animal is traceable, every cut is
+                certified Zabiha halal, and every order leaves our shop the same day
+                it's prepared.
+              </p>
+              <ul className="mt-8 space-y-3 text-sm">
+                {[
+                  "Whole-animal, in-house butchery — nothing pre-packed",
+                  "Sourced from Amish and Mennonite family farms in PA",
+                  "Custom cuts, mincing, and marinating at no extra charge",
+                  "Hand-blended spice mixes pounded weekly",
+                ].map((t) => (
+                  <li key={t} className="flex items-start gap-3">
+                    <BadgeCheck className="mt-0.5 h-5 w-5 shrink-0 text-meat" />
+                    <span className="text-ink">{t}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
-          </div>
-          <div>
-            <span className="text-xs font-bold uppercase tracking-[0.2em] text-meat">About PA Halal</span>
-            <AccentHeading
-              as="h2"
-              text="Three generations. One standard."
-              accentIndex={1}
-              className="mt-3 text-4xl sm:text-5xl"
-            />
-            <p className="mt-6 text-lg text-muted-foreground">
-              We started as a single counter on Market Street in 1996. Three decades
-              later, we still butcher in-house, by hand, with the same care our
-              grandfather insisted on. Every animal is traceable, every cut is
-              certified Zabiha halal, and every order leaves our shop the same day
-              it's prepared.
-            </p>
-            <ul className="mt-8 space-y-3 text-sm">
-              {[
-                "Whole-animal, in-house butchery — nothing pre-packed",
-                "Sourced from Amish and Mennonite family farms in PA",
-                "Custom cuts, mincing, and marinating at no extra charge",
-                "Hand-blended spice mixes pounded weekly",
-              ].map((t) => (
-                <li key={t} className="flex items-start gap-3">
-                  <BadgeCheck className="mt-0.5 h-5 w-5 shrink-0 text-meat" />
-                  <span className="text-ink">{t}</span>
-                </li>
-              ))}
-            </ul>
           </div>
         </div>
       </section>
