@@ -1,9 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useRef, useState } from "react";
 import { AccentHeading } from "@/components/AccentHeading";
 import { ProductCard } from "@/components/ProductCard";
 import { PRODUCTS } from "@/lib/products";
 import { Button } from "@/components/ui/button";
-import { BadgeCheck, Beef, Clock, CreditCard, Leaf, MapPin, Phone, Quote, ShieldCheck, Sparkles, Star, Truck } from "lucide-react";
+import aboutVideoAsset from "@/assets/about-video.mp4.asset.json";
+import aboutPosterAsset from "@/assets/about-poster.jpg.asset.json";
+import { BadgeCheck, Beef, Clock, CreditCard, Leaf, MapPin, Pause, Phone, Play, Quote, ShieldCheck, Sparkles, Star, Truck } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -17,6 +20,60 @@ export const Route = createFileRoute("/")({
   }),
   component: Home,
 });
+
+function AboutVideo() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const toggle = () => {
+    const v = videoRef.current;
+    if (!v) return;
+    if (isPlaying) v.pause();
+    else v.play();
+  };
+
+  return (
+    <div className="relative mx-auto w-full max-w-xl lg:max-w-none">
+      <div className="clay-image-frame relative">
+        <video
+          ref={videoRef}
+          src={aboutVideoAsset.url}
+          poster={aboutPosterAsset.url}
+          className="aspect-[9/16] w-full max-h-[580px] rounded-[1.5rem] object-cover sm:aspect-[4/5]"
+          playsInline
+          preload="metadata"
+          onPlay={() => setIsPlaying(true)}
+          onPause={() => setIsPlaying(false)}
+          onEnded={() => setIsPlaying(false)}
+        />
+        <button
+          type="button"
+          onClick={toggle}
+          className="absolute inset-0 flex items-center justify-center rounded-[1.5rem] bg-ink/10 transition-colors hover:bg-ink/20"
+          aria-label={isPlaying ? "Pause video" : "Play video"}
+        >
+          <div className="clay-meat flex h-16 w-16 items-center justify-center transition-transform duration-300 hover:scale-110">
+            {isPlaying ? (
+              <Pause className="h-7 w-7 text-white" />
+            ) : (
+              <Play className="ml-1 h-7 w-7 text-white" />
+            )}
+          </div>
+        </button>
+      </div>
+
+      <div className="absolute -bottom-5 -right-3 clay-surface flex items-center gap-3 p-4 sm:-right-5">
+        <div className="clay-meat flex h-11 w-11 items-center justify-center">
+          <BadgeCheck className="h-5 w-5 text-white" />
+        </div>
+        <div>
+          <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">HMS Certified</div>
+          <div className="text-sm font-extrabold text-ink">Since 1996</div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 function Home() {
   const featured = PRODUCTS.filter((p) =>
@@ -136,52 +193,42 @@ function Home() {
       </section>
 
       {/* ABOUT */}
-      <section className="relative bg-cattle-pattern py-20">
-        <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:px-8 lg:items-center">
-          <div className="relative">
-            <img
-              src="https://images.unsplash.com/photo-1605522561233-768ad7a8fabf?auto=format&fit=crop&w=1200&q=80"
-              alt="Butcher at work"
-              className="aspect-[4/5] w-full rounded-3xl object-cover shadow-2xl"
-            />
-            <div className="absolute -bottom-6 -right-4 rounded-2xl border border-border bg-card p-5 shadow-xl sm:-right-6">
-              <div className="flex items-center gap-3">
-                <BadgeCheck className="h-10 w-10 text-meat" />
-                <div>
-                  <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">HMS Certified</div>
-                  <div className="text-base font-bold text-ink">Since 1996</div>
-                </div>
-              </div>
+      <section className="relative overflow-hidden bg-cattle-pattern py-20 lg:py-28">
+        <div className="pointer-events-none absolute -left-24 top-0 h-80 w-80 rounded-full bg-meat/10 blur-3xl" aria-hidden />
+        <div className="pointer-events-none absolute -right-20 bottom-0 h-72 w-72 rounded-full bg-amber-200/40 blur-3xl" aria-hidden />
+
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+            <AboutVideo />
+            <div>
+              <span className="text-xs font-bold uppercase tracking-[0.2em] text-meat">About PA Halal</span>
+              <AccentHeading
+                as="h2"
+                text="Three generations. One standard."
+                accentIndex={1}
+                className="mt-3 text-4xl sm:text-5xl"
+              />
+              <p className="mt-6 text-lg text-muted-foreground">
+                We started as a single counter on Market Street in 1996. Three decades
+                later, we still butcher in-house, by hand, with the same care our
+                grandfather insisted on. Every animal is traceable, every cut is
+                certified Zabiha halal, and every order leaves our shop the same day
+                it's prepared.
+              </p>
+              <ul className="mt-8 space-y-3 text-sm">
+                {[
+                  "Whole-animal, in-house butchery — nothing pre-packed",
+                  "Sourced from Amish and Mennonite family farms in PA",
+                  "Custom cuts, mincing, and marinating at no extra charge",
+                  "Hand-blended spice mixes pounded weekly",
+                ].map((t) => (
+                  <li key={t} className="flex items-start gap-3">
+                    <BadgeCheck className="mt-0.5 h-5 w-5 shrink-0 text-meat" />
+                    <span className="text-ink">{t}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
-          </div>
-          <div>
-            <span className="text-xs font-bold uppercase tracking-[0.2em] text-meat">About PA Halal</span>
-            <AccentHeading
-              as="h2"
-              text="Three generations. One standard."
-              accentIndex={1}
-              className="mt-3 text-4xl sm:text-5xl"
-            />
-            <p className="mt-6 text-lg text-muted-foreground">
-              We started as a single counter on Market Street in 1996. Three decades
-              later, we still butcher in-house, by hand, with the same care our
-              grandfather insisted on. Every animal is traceable, every cut is
-              certified Zabiha halal, and every order leaves our shop the same day
-              it's prepared.
-            </p>
-            <ul className="mt-8 space-y-3 text-sm">
-              {[
-                "Whole-animal, in-house butchery — nothing pre-packed",
-                "Sourced from Amish and Mennonite family farms in PA",
-                "Custom cuts, mincing, and marinating at no extra charge",
-                "Hand-blended spice mixes pounded weekly",
-              ].map((t) => (
-                <li key={t} className="flex items-start gap-3">
-                  <BadgeCheck className="mt-0.5 h-5 w-5 shrink-0 text-meat" />
-                  <span className="text-ink">{t}</span>
-                </li>
-              ))}
-            </ul>
           </div>
         </div>
       </section>
