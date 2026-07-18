@@ -50,6 +50,73 @@ function AboutVideo() {
   );
 }
 
+function GroceryPicksRow() {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const grocery = PRODUCTS.filter((p) => p.group === "grocery");
+  const picks = Array.from(new Map(grocery.map((p) => [p.subcategory, p])).values());
+
+  const scroll = (dir: number) => {
+    scrollRef.current?.scrollBy({ left: dir * 300, behavior: "smooth" });
+  };
+
+  return (
+    <section className="relative overflow-hidden bg-clay-canvas py-20">
+      <div aria-hidden className="pointer-events-none absolute -left-20 top-10 h-72 w-72 rounded-full bg-amber-200/40 blur-3xl" />
+      <div aria-hidden className="pointer-events-none absolute -right-16 bottom-0 h-72 w-72 rounded-full bg-meat/15 blur-3xl" />
+
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <span className="inline-flex items-center gap-2 clay-pill px-4 py-2 text-[11px] font-black uppercase tracking-[0.2em] text-meat">
+              <Leaf className="h-3.5 w-3.5" /> Pantry
+            </span>
+            <AccentHeading
+              as="h2"
+              text="One row of every aisle"
+              accentIndex={3}
+              className="mt-4 text-4xl sm:text-5xl"
+            />
+          </div>
+          <Link to="/grocery" className="text-sm font-bold text-meat hover:text-meat-dark">
+            Shop all grocery →
+          </Link>
+        </div>
+
+        <div className="mt-10 flex items-center gap-3 sm:gap-4">
+          <button
+            type="button"
+            onClick={() => scroll(-1)}
+            aria-label="Scroll left"
+            className="clay-meat flex h-11 w-11 shrink-0 items-center justify-center rounded-full transition-transform active:scale-95 sm:h-12 sm:w-12"
+          >
+            <ChevronLeft className="h-5 w-5 text-white" />
+          </button>
+
+          <div
+            ref={scrollRef}
+            className="flex snap-x snap-mandatory gap-5 overflow-x-auto pb-4 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          >
+            {picks.map((p) => (
+              <div key={p.id} className="w-[260px] shrink-0 snap-start sm:w-[280px]">
+                <ProductCard product={p} />
+              </div>
+            ))}
+          </div>
+
+          <button
+            type="button"
+            onClick={() => scroll(1)}
+            aria-label="Scroll right"
+            className="clay-meat flex h-11 w-11 shrink-0 items-center justify-center rounded-full transition-transform active:scale-95 sm:h-12 sm:w-12"
+          >
+            <ChevronRight className="h-5 w-5 text-white" />
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function Home() {
   const featured = PRODUCTS.filter((p) =>
     ["beef-ribeye", "beef-tbone", "lamb-chops", "chicken-thigh", "beef-shortrib", "goat-curry", "lamb-leg", "chicken-whole"].includes(p.id),
