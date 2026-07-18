@@ -20,6 +20,59 @@ export const Route = createFileRoute("/")({
   component: Home,
 });
 
+function AboutVideo() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const toggle = () => {
+    const v = videoRef.current;
+    if (!v) return;
+    if (isPlaying) v.pause();
+    else v.play();
+  };
+
+  return (
+    <div className="relative mx-auto w-full max-w-xl lg:max-w-none">
+      <div className="clay-image-frame relative">
+        <video
+          ref={videoRef}
+          src={aboutVideoAsset.url}
+          className="aspect-[4/3] w-full rounded-[1.5rem] object-cover"
+          playsInline
+          preload="metadata"
+          onPlay={() => setIsPlaying(true)}
+          onPause={() => setIsPlaying(false)}
+          onEnded={() => setIsPlaying(false)}
+        />
+        <button
+          type="button"
+          onClick={toggle}
+          className="absolute inset-0 flex items-center justify-center rounded-[1.5rem] bg-ink/10 transition-colors hover:bg-ink/20"
+          aria-label={isPlaying ? "Pause video" : "Play video"}
+        >
+          <div className="clay-meat flex h-16 w-16 items-center justify-center transition-transform duration-300 hover:scale-110">
+            {isPlaying ? (
+              <Pause className="h-7 w-7 text-white" />
+            ) : (
+              <Play className="ml-1 h-7 w-7 text-white" />
+            )}
+          </div>
+        </button>
+      </div>
+
+      <div className="absolute -bottom-5 -right-3 clay-surface flex items-center gap-3 p-4 sm:-right-5">
+        <div className="clay-meat flex h-11 w-11 items-center justify-center">
+          <BadgeCheck className="h-5 w-5 text-white" />
+        </div>
+        <div>
+          <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">HMS Certified</div>
+          <div className="text-sm font-extrabold text-ink">Since 1996</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function Home() {
   const featured = PRODUCTS.filter((p) =>
     ["beef-ribeye", "beef-tbone", "lamb-chops", "chicken-thigh", "beef-shortrib", "goat-curry", "lamb-leg", "chicken-whole"].includes(p.id),
