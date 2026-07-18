@@ -42,12 +42,15 @@ export function ProductCard({ product }: { product: Product }) {
 
   return (
     <div className="group relative flex flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all hover:-translate-y-0.5 hover:border-meat/40 hover:shadow-xl hover:shadow-meat/5">
-      <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+      <div className={cn("relative aspect-[4/3] overflow-hidden bg-muted", !isMeat && "bg-white p-4")}>
         <img
           src={product.image}
           alt={product.name}
           loading="lazy"
-          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          className={cn(
+            "h-full w-full transition-transform duration-500 group-hover:scale-105",
+            isMeat ? "object-cover" : "object-contain",
+          )}
         />
         <button
           onClick={() => toggleWishlist(product.id)}
