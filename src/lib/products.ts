@@ -129,6 +129,26 @@ export const PRODUCTS: Product[] = [
   { id: "shan-chana", name: "Shan Chana Masala", category: "grocery", group: "grocery", subcategory: "Curry Mixes", price: 3.29, unit: "50g box",
     image: shanChanaImg,
     description: "Tangy chickpea curry mix with dried pomegranate and roasted cumin." },
+
+  // BISCUITS — LU & Peak Freans
+  { id: "peak-freans-lemon", name: "Peak Freans Original Sandwich Lemon", category: "grocery", group: "grocery", subcategory: "Biscuits & Cookies", price: 4.99, unit: "16 snack packs",
+    image: peakFreansLemonAsset.url,
+    description: "Crisp sandwich biscuits with a zesty lemon cream filling — a teatime classic." },
+  { id: "peak-freans-choco", name: "Peak Freans Original Sandwich Chocolate", category: "grocery", group: "grocery", subcategory: "Biscuits & Cookies", price: 4.99, unit: "16 snack packs",
+    image: peakFreansChocoImg,
+    description: "Rich chocolate cream sandwiched between crunchy Peak Freans biscuits." },
+  { id: "peak-freans-choc-chip", name: "Peak Freans Chocolate Chip Cookies", category: "grocery", group: "grocery", subcategory: "Biscuits & Cookies", price: 3.99, unit: "200g box",
+    image: peakFreansChocChipImg,
+    description: "Baked with real chocolate chips for a buttery, melt-in-the-mouth treat." },
+  { id: "lu-tuc", name: "LU Tuc Original Salty Crackers", category: "grocery", group: "grocery", subcategory: "Biscuits & Cookies", price: 3.49, unit: "100g box",
+    image: luTucImg,
+    description: "Light, oven-baked salty crackers with a subtle crunch — perfect with cheese or dips." },
+  { id: "lu-petit-beurre", name: "LU Petit Beurre Butter Biscuits", category: "grocery", group: "grocery", subcategory: "Biscuits & Cookies", price: 3.99, unit: "200g box",
+    image: luPetitBeurreImg,
+    description: "Pure butter French biscuits with the iconic scalloped edge and 4x4 design." },
+  { id: "lu-prince", name: "LU Prince Chocolate Cream Biscuits", category: "grocery", group: "grocery", subcategory: "Biscuits & Cookies", price: 4.49, unit: "300g box",
+    image: luPrinceImg,
+    description: "Whole wheat biscuits filled with smooth chocolate cream — a lunchbox favorite." },
 ];
 
 export const getProduct = (id: string) => PRODUCTS.find((p) => p.id === id);
