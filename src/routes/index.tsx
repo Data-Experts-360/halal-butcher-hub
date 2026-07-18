@@ -97,7 +97,7 @@ function GroceryPicksRow() {
             className="flex snap-x snap-mandatory gap-5 overflow-x-auto pb-4 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           >
             {picks.map((p) => (
-              <div key={p.id} className="w-[230px] shrink-0 snap-start sm:w-[235px]">
+              <div key={p.id} className="w-[220px] shrink-0 snap-start sm:w-[225px]">
                 <ProductCard product={p} />
               </div>
             ))}
