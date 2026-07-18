@@ -41,7 +41,7 @@ function AboutVideo() {
           poster={aboutPosterAsset.url}
           className="aspect-[9/16] w-full max-h-[580px] rounded-[1.5rem] object-cover sm:aspect-[4/5]"
           playsInline
-          preload="none"
+          preload="metadata"
           onPlay={() => setIsPlaying(true)}
           onPause={() => setIsPlaying(false)}
           onEnded={() => setIsPlaying(false)}
