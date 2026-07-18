@@ -1,12 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useRef, useState } from "react";
 import { AccentHeading } from "@/components/AccentHeading";
 import { ProductCard } from "@/components/ProductCard";
 import { PRODUCTS } from "@/lib/products";
 import { Button } from "@/components/ui/button";
 import aboutVideoAsset from "@/assets/about-video.mp4.asset.json";
 import aboutPosterAsset from "@/assets/about-poster.jpg.asset.json";
-import { BadgeCheck, Beef, Clock, CreditCard, Leaf, MapPin, Pause, Phone, Play, Quote, ShieldCheck, Sparkles, Star, Truck } from "lucide-react";
+import { BadgeCheck, Beef, Clock, CreditCard, Leaf, MapPin, Phone, Quote, ShieldCheck, Sparkles, Star, Truck } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -22,44 +21,19 @@ export const Route = createFileRoute("/")({
 });
 
 function AboutVideo() {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-
-  const toggle = () => {
-    const v = videoRef.current;
-    if (!v) return;
-    if (isPlaying) v.pause();
-    else v.play();
-  };
-
   return (
     <div className="relative mx-auto w-full max-w-xl lg:max-w-none">
-      <div className="clay-image-frame relative">
+      <div className="clay-image-frame relative overflow-hidden">
         <video
-          ref={videoRef}
           src={aboutVideoAsset.url}
           poster={aboutPosterAsset.url}
           className="aspect-[9/16] w-full max-h-[580px] rounded-[1.5rem] object-cover sm:aspect-[4/5]"
+          autoPlay
+          muted
+          loop
           playsInline
           preload="metadata"
-          onPlay={() => setIsPlaying(true)}
-          onPause={() => setIsPlaying(false)}
-          onEnded={() => setIsPlaying(false)}
         />
-        <button
-          type="button"
-          onClick={toggle}
-          className="absolute inset-0 flex items-center justify-center rounded-[1.5rem] bg-ink/10 transition-colors hover:bg-ink/20"
-          aria-label={isPlaying ? "Pause video" : "Play video"}
-        >
-          <div className="clay-meat flex h-16 w-16 items-center justify-center transition-transform duration-300 hover:scale-110">
-            {isPlaying ? (
-              <Pause className="h-7 w-7 text-white" />
-            ) : (
-              <Play className="ml-1 h-7 w-7 text-white" />
-            )}
-          </div>
-        </button>
       </div>
 
       <div className="absolute -bottom-5 -right-3 clay-surface flex items-center gap-3 p-4 sm:-right-5">
