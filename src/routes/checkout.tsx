@@ -425,7 +425,7 @@ function Checkout() {
               onClick={handlePay}
               className="w-full bg-meat py-6 text-base font-bold text-white hover:bg-meat-dark"
             >
-              {processing ? "Processing…" : `Pay $${total.toFixed(2)}`}
+              {processing ? "Processing…" : fulfillment === "delivery" ? `Pay $${total.toFixed(2)} & track delivery` : `Pay $${total.toFixed(2)}`}
             </Button>
           ) : (
             <div className="space-y-2">
