@@ -104,7 +104,7 @@ export function ProductCard({ product }: { product: Product }) {
 
         <Button
           onClick={handleAdd}
-          className="mt-auto w-full bg-meat text-white hover:bg-meat-dark [margin-top:1rem] [&]:mt-auto"
+          className="mt-4 w-full bg-meat text-white hover:bg-meat-dark"
         >
 
           <Plus className="mr-1 h-4 w-4" /> Add to cart
