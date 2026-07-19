@@ -81,6 +81,21 @@ interface ShopState {
   addProduct: (p: AdminProduct) => void;
   updateProduct: (id: string, patch: Partial<AdminProduct>) => void;
   deleteProduct: (id: string) => void;
+
+  activeDelivery: ActiveDelivery | null;
+  setActiveDelivery: (d: ActiveDelivery | null) => void;
+}
+
+export interface ActiveDelivery {
+  id: string;
+  items: CartItem[];
+  subtotal: number;
+  tax: number;
+  fee: number;
+  total: number;
+  address: string;
+  customerName: string;
+  createdAt: number;
 }
 
 const keyOf = (id: string, prep?: string) => `${id}__${prep ?? ""}`;
