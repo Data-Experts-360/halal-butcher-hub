@@ -339,6 +339,12 @@ function MockMap({ driverProgress, stage }: { driverProgress: number; stage: Sta
   // Path follows the road grid: east along y=220, north along x=300, east along y=90.
   // Small arc radii at corners so the bike turns naturally rather than teleporting.
   const path = "M 80 220 L 292 220 A 8 8 0 0 0 300 212 L 300 98 A 8 8 0 0 1 308 90 L 340 90";
+  const pathLen = useMemo(() => {
+    if (typeof document === "undefined") return 0;
+    const p = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    p.setAttribute("d", path);
+    return p.getTotalLength();
+  }, [path]);
   const pt = useMemo(() => pointOnPath(path, driverProgress), [driverProgress]);
 
   const showDriver = stage !== "placed" && stage !== "preparing";
@@ -394,8 +400,8 @@ function MockMap({ driverProgress, stage }: { driverProgress: number; stage: Sta
           strokeWidth="4"
           fill="none"
           strokeLinecap="round"
-          strokeDasharray="1000"
-          strokeDashoffset={1000 - driverProgress * 1000}
+          strokeDasharray={pathLen || 1}
+          strokeDashoffset={(pathLen || 1) * (1 - driverProgress)}
         />
       </svg>
 
