@@ -732,7 +732,7 @@ function Home() {
                 </div>
                 <div>
                   <h3 className="text-xl font-extrabold text-ink">PA Halal Butcher & Grocer</h3>
-                  <p className="text-sm text-muted-foreground">Shop 6, 429 Logan Road, Greenslopes QLD 4120</p>
+                  <p className="text-sm text-muted-foreground">2/250 Ipswich Rd, Woolloongabba QLD 4102, Australia</p>
                 </div>
               </div>
 
@@ -741,21 +741,21 @@ function Home() {
                   <Clock className="mt-0.5 h-5 w-5 shrink-0 text-meat" />
                   <div>
                     <p className="font-semibold text-ink">Open today</p>
-                    <p className="text-sm text-muted-foreground">8:00 AM – 8:00 PM</p>
+                    <p className="text-sm text-muted-foreground">8 am – 6 pm</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
                   <Phone className="mt-0.5 h-5 w-5 shrink-0 text-meat" />
                   <div>
                     <p className="font-semibold text-ink">Call ahead</p>
-                    <p className="text-sm text-muted-foreground">(07) 3397 1234</p>
+                    <p className="text-sm text-muted-foreground">+61 7 3393 1213</p>
                   </div>
                 </div>
               </div>
 
               <div className="mt-8">
                 <a
-                  href="https://www.google.com/maps/dir//PA+Halal+Butcher+%26+Grocer"
+                  href="https://www.google.com/maps/dir//2%2F250+Ipswich+Rd,+Woolloongabba+QLD+4102,+Australia"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -769,7 +769,7 @@ function Home() {
             {/* Map embed */}
             <div className="clay-image-frame min-h-[360px] overflow-hidden sm:min-h-[420px] lg:min-h-full">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3539.0240948924547!2d153.0357803!3d-27.4996261!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6b915a67a4a6fd1b%3A0xdf7bd22deea2032a!2sPA%20Halal%20Butcher%20%26%20Grocer!5e0!3m2!1sen!2s!4v1784191899320!5m2!1sen!2s"
+                src="https://www.google.com/maps?q=2%2F250+Ipswich+Rd%2C+Woolloongabba+QLD+4102%2C+Australia&output=embed"
                 width="100%"
                 height="100%"
                 allowFullScreen
