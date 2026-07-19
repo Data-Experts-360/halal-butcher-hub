@@ -14,6 +14,7 @@ import {
   X,
 } from "lucide-react";
 import { NetworkLog } from "./delivery.index";
+import { useShop } from "@/lib/store";
 
 export const Route = createFileRoute("/delivery/track")({
   head: () => ({
@@ -50,6 +51,8 @@ interface LogLine {
 
 function TrackDelivery() {
   const navigate = useNavigate();
+  const activeDelivery = useShop((s) => s.activeDelivery);
+  const orderId = activeDelivery?.id ?? "PA-9F2K1H";
   const [stage, setStage] = useState<StageKey>("preparing");
   const [etaMin, setEtaMin] = useState(25);
   const [driverProgress, setDriverProgress] = useState(0); // 0..1 along path
@@ -162,7 +165,7 @@ function TrackDelivery() {
           >
             <ArrowLeft className="h-4 w-4" /> Order
           </button>
-          <div className="text-xs font-semibold text-neutral-500">Order #GBJ-9F2K1H</div>
+          <div className="text-xs font-semibold text-neutral-500">Order #{orderId}</div>
         </div>
 
         {/* Hero status */}

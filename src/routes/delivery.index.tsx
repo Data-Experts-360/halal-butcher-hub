@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { ChevronDown, ChevronUp, Package, Terminal, Truck, CheckCircle2, Clock } from "lucide-react";
+import { ChevronDown, ChevronUp, MapPin, Package, Terminal, Truck, CheckCircle2, Clock } from "lucide-react";
+import { useShop } from "@/lib/store";
 
 export const Route = createFileRoute("/delivery/")({
   head: () => ({
@@ -26,6 +27,7 @@ const now = () => {
 };
 
 function DeliveryConfirmation() {
+  const activeDelivery = useShop((s) => s.activeDelivery);
   const [logs, setLogs] = useState<LogLine[]>([]);
   const [logOpen, setLogOpen] = useState(true);
   const idRef = useRef(0);
@@ -35,32 +37,37 @@ function DeliveryConfirmation() {
     setLogs((prev) => [...prev, { ...l, id: ++idRef.current, ts: now() }]);
 
   useEffect(() => {
+    const addr = activeDelivery?.address ?? "1600 Market St";
     const seq: Array<[number, Omit<LogLine, "id" | "ts">]> = [
       [200, { method: "POST", text: "/api/v1/orders/create", status: "201 Created" }],
-      [900, { method: "POST", text: "/api/v1/payments/charge  amount=42.87", status: "200 OK" }],
-      [1700, { method: "GET", text: "/api/v1/merchants/gourmet-burger-joint", status: "200 OK" }],
-      [2600, { method: "POST", text: "/api/v1/deliveries/quote  dropoff=1600 Market St", status: "200 OK" }],
-      [3600, { method: "POST", text: "/api/v1/deliveries/create  external_id=ord_9F2K1H", status: "201 Created" }],
+      [900, { method: "POST", text: `/api/v1/payments/charge  amount=${(activeDelivery?.total ?? 0).toFixed(2)}`, status: "200 OK" }],
+      [1700, { method: "GET", text: "/api/v1/merchants/pa-halal-butcher", status: "200 OK" }],
+      [2600, { method: "POST", text: `/api/v1/deliveries/quote  dropoff=${addr}`, status: "200 OK" }],
+      [3600, { method: "POST", text: `/api/v1/deliveries/create  external_id=${activeDelivery?.id ?? "ord_9F2K1H"}`, status: "201 Created" }],
       [4600, { method: "GET", text: "/api/v1/deliveries/track  id=dlv_ax82nq", status: "200 OK" }],
       [5800, { method: "WEBHOOK", text: "delivery.status.updated: preparing" }],
     ];
     const timers = seq.map(([d, l]) => setTimeout(() => pushLog(l), d));
     return () => timers.forEach(clearTimeout);
-  }, []);
+  }, [activeDelivery]);
 
   useEffect(() => {
     if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
   }, [logs]);
 
-  const items = [
-    { name: "Truffle Burger", qty: 2, price: 15.5 },
-    { name: "Hand-Cut Fries", qty: 1, price: 6.0 },
-    { name: "Craft Root Beer", qty: 1, price: 3.5 },
+  const fallbackItems = [
+    { name: "Truffle Burger", qty: 2, unit: "unit", price: 15.5, image: "" },
+    { name: "Hand-Cut Fries", qty: 1, unit: "unit", price: 6.0, image: "" },
   ];
-  const subtotal = items.reduce((s, i) => s + i.qty * i.price, 0);
-  const delivery = 2.99;
-  const tax = subtotal * 0.06;
-  const total = subtotal + delivery + tax;
+  const items = activeDelivery
+    ? activeDelivery.items.map((c) => ({ name: c.name, qty: c.quantity, unit: c.unit, price: c.price, image: c.image, prep: c.preparation }))
+    : fallbackItems.map((f) => ({ ...f, prep: undefined as string | undefined }));
+  const subtotal = activeDelivery?.subtotal ?? items.reduce((s, i) => s + i.qty * i.price, 0);
+  const delivery = activeDelivery?.fee ?? 2.99;
+  const tax = activeDelivery?.tax ?? subtotal * 0.06;
+  const total = activeDelivery?.total ?? subtotal + delivery + tax;
+  const orderId = activeDelivery?.id ?? "PA-9F2K1H";
+  const address = activeDelivery?.address ?? "1600 Market St";
 
   return (
     <div className="min-h-screen bg-[#F7F7F7] pb-40">
@@ -72,7 +79,7 @@ function DeliveryConfirmation() {
           </div>
           <div>
             <div className="text-xs font-semibold uppercase tracking-wider text-neutral-500">DoorDash · Order confirmed</div>
-            <div className="text-lg font-bold text-neutral-900">Order #GBJ-9F2K1H</div>
+            <div className="text-lg font-bold text-neutral-900">Order #{orderId}</div>
           </div>
         </div>
 
@@ -88,7 +95,10 @@ function DeliveryConfirmation() {
                 Live
               </div>
               <h1 className="mt-1 text-2xl font-black text-neutral-900">Preparing your order…</h1>
-              <p className="mt-1 text-sm text-neutral-600">Gourmet Burger Joint · 1.2 mi away</p>
+              <p className="mt-1 text-sm text-neutral-600">PA Halal Butcher &amp; Grocer · 1.2 mi away</p>
+              <p className="mt-2 flex items-center gap-1.5 text-xs font-semibold text-neutral-500">
+                <MapPin className="h-3.5 w-3.5 text-[#FF3008]" /> {address}
+              </p>
             </div>
             <div className="hidden sm:flex flex-col items-end">
               <div className="text-xs font-semibold uppercase tracking-wider text-neutral-500">ETA</div>
@@ -117,13 +127,22 @@ function DeliveryConfirmation() {
             </span>
           </div>
           <ul className="mt-4 divide-y divide-neutral-100">
-            {items.map((it) => (
-              <li key={it.name} className="flex items-center justify-between py-3">
-                <div className="flex items-center gap-3">
-                  <span className="grid h-9 w-9 place-items-center rounded-lg bg-[#FFF1EE] text-sm font-bold text-[#FF3008]">
-                    {it.qty}×
-                  </span>
-                  <span className="text-sm font-semibold text-neutral-800">{it.name}</span>
+            {items.map((it, idx) => (
+              <li key={`${it.name}-${it.prep ?? ""}-${idx}`} className="flex items-center justify-between gap-3 py-3">
+                <div className="flex min-w-0 items-center gap-3">
+                  {it.image ? (
+                    <img src={it.image} alt={it.name} className="h-11 w-11 shrink-0 rounded-lg object-cover" />
+                  ) : (
+                    <span className="grid h-11 w-11 shrink-0 place-items-center rounded-lg bg-[#FFF1EE] text-sm font-bold text-[#FF3008]">
+                      {it.qty}×
+                    </span>
+                  )}
+                  <div className="min-w-0">
+                    <div className="truncate text-sm font-semibold text-neutral-800">{it.name}</div>
+                    <div className="text-xs text-neutral-500">
+                      {it.qty} × {it.unit}{it.prep ? ` · ${it.prep}` : ""}
+                    </div>
+                  </div>
                 </div>
                 <span className="text-sm font-bold text-neutral-900">${(it.price * it.qty).toFixed(2)}</span>
               </li>

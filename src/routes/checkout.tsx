@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useShop, cartTotal } from "@/lib/store";
-import { Beef, CalendarDays, Clock, CreditCard, Gift, Lock, Minus, Plus, Sparkles, Trash2, X } from "lucide-react";
+import { Beef, Bike, CalendarDays, Clock, CreditCard, Gift, Lock, MapPin, Minus, Package, Plus, Sparkles, Trash2, X } from "lucide-react";
 
 export const Route = createFileRoute("/checkout")({
   head: () => ({
@@ -30,10 +30,14 @@ function Checkout() {
   const clearCart = useShop((s) => s.clearCart);
   const addPoints = useShop((s) => s.addPoints);
   const addOrder = useShop((s) => s.addOrder);
+  const setActiveDelivery = useShop((s) => s.setActiveDelivery);
 
   const dates = Array.from({ length: 5 }, (_, i) => addDays(new Date(), i));
   const [date, setDate] = useState<Date>(dates[0]);
   const [time, setTime] = useState<string>(PICKUP_TIMES[2]);
+
+  const [fulfillment, setFulfillment] = useState<"pickup" | "delivery">("pickup");
+  const [address, setAddress] = useState("");
 
   const [card, setCard] = useState({ name: user?.name ?? "", number: "4242 4242 4242 4242", exp: "12/28", cvc: "123" });
   const [processing, setProcessing] = useState(false);
@@ -42,7 +46,8 @@ function Checkout() {
   const POINTS_PER_DOLLAR = 5; // 50 pts = $10 → 5 pts = $1
   const subtotal = cartTotal(cart);
   const tax = subtotal * 0.06;
-  const preDiscountTotal = subtotal + tax;
+  const deliveryFee = fulfillment === "delivery" ? 4.99 : 0;
+  const preDiscountTotal = subtotal + tax + deliveryFee;
   const maxRedeemable = user
     ? Math.min(user.points, Math.floor(preDiscountTotal * POINTS_PER_DOLLAR))
     : 0;
@@ -62,17 +67,25 @@ function Checkout() {
       navigate({ to: "/signin" });
       return;
     }
+    if (fulfillment === "delivery" && address.trim().length < 5) {
+      toast.error("Please enter a delivery address");
+      return;
+    }
     setProcessing(true);
     await new Promise((r) => setTimeout(r, 1500));
 
     const orderId = `PA-${Math.random().toString(36).slice(2, 8).toUpperCase()}`;
+    const pickupLabel =
+      fulfillment === "delivery"
+        ? `Delivery · ${address}`
+        : `${format(date, "EEE, MMM d")} · ${time}`;
     const order = {
       id: orderId,
       customerName: user.name,
       customerEmail: user.email,
       total,
       pointsEarned,
-      pickup: `${format(date, "EEE, MMM d")} · ${time}`,
+      pickup: pickupLabel,
       items: cart.map((c) => ({ name: c.name, qty: c.quantity, unit: c.unit, price: c.price, prep: c.preparation })),
       status: "pending" as const,
       createdAt: Date.now(),
@@ -84,6 +97,25 @@ function Checkout() {
       if (clampedPoints > 0) addPoints(-clampedPoints);
       addPoints(pointsEarned);
     }
+
+    if (fulfillment === "delivery") {
+      setActiveDelivery({
+        id: orderId,
+        items: [...cart],
+        subtotal,
+        tax,
+        fee: deliveryFee,
+        total,
+        address,
+        customerName: user.name,
+        createdAt: Date.now(),
+      });
+      clearCart();
+      toast.success("Delivery on the way");
+      navigate({ to: "/delivery" });
+      return;
+    }
+
     clearCart();
     toast.success("Payment successful");
     navigate({ to: "/success" });
@@ -145,52 +177,107 @@ function Checkout() {
             </ul>
           </div>
 
-          {/* Pickup */}
+          {/* Fulfillment method */}
           <div className="rounded-2xl border border-border bg-card">
-            <div className="flex items-center gap-2 border-b border-border px-6 py-4">
-              <CalendarDays className="h-4 w-4 text-meat" />
-              <span className="font-bold text-ink">Choose pickup time</span>
-            </div>
-            <div className="space-y-5 p-6">
-              <div>
-                <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Date</div>
-                <div className="mt-2 flex flex-wrap gap-2">
-                  {dates.map((d) => {
-                    const active = format(d, "yyyy-MM-dd") === format(date, "yyyy-MM-dd");
-                    return (
-                      <button
-                        key={d.toISOString()}
-                        onClick={() => setDate(d)}
-                        className={`flex min-w-20 flex-col rounded-xl border px-4 py-3 text-left transition-colors ${
-                          active ? "border-meat bg-meat text-white" : "border-border bg-background hover:border-meat/50"
-                        }`}
-                      >
-                        <span className="text-[10px] font-bold uppercase tracking-wider opacity-80">{format(d, "EEE")}</span>
-                        <span className="text-lg font-black">{format(d, "d")}</span>
-                        <span className="text-[10px] opacity-80">{format(d, "MMM")}</span>
-                      </button>
-                    );
-                  })}
+            <div className="border-b border-border px-6 py-4 font-bold text-ink">How would you like your order?</div>
+            <div className="grid gap-3 p-6 sm:grid-cols-2">
+              <button
+                onClick={() => setFulfillment("pickup")}
+                className={`flex items-start gap-3 rounded-xl border-2 p-4 text-left transition-all ${
+                  fulfillment === "pickup" ? "border-meat bg-meat/5 shadow-sm" : "border-border bg-background hover:border-meat/50"
+                }`}
+              >
+                <div className={`grid h-10 w-10 shrink-0 place-items-center rounded-lg ${fulfillment === "pickup" ? "bg-meat text-white" : "bg-muted text-ink"}`}>
+                  <Package className="h-5 w-5" />
                 </div>
-              </div>
-              <div>
-                <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Time window</div>
-                <div className="mt-2 flex flex-wrap gap-2">
-                  {PICKUP_TIMES.map((t) => (
-                    <button
-                      key={t}
-                      onClick={() => setTime(t)}
-                      className={`flex items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-sm font-semibold transition-colors ${
-                        time === t ? "border-meat bg-meat text-white" : "border-border bg-background text-ink hover:border-meat/50"
-                      }`}
-                    >
-                      <Clock className="h-3.5 w-3.5" /> {t}
-                    </button>
-                  ))}
+                <div>
+                  <div className="font-bold text-ink">In-store pickup</div>
+                  <div className="text-xs text-muted-foreground">Free · Scan QR at counter</div>
                 </div>
-              </div>
+              </button>
+              <button
+                onClick={() => setFulfillment("delivery")}
+                className={`flex items-start gap-3 rounded-xl border-2 p-4 text-left transition-all ${
+                  fulfillment === "delivery" ? "border-meat bg-meat/5 shadow-sm" : "border-border bg-background hover:border-meat/50"
+                }`}
+              >
+                <div className={`grid h-10 w-10 shrink-0 place-items-center rounded-lg ${fulfillment === "delivery" ? "bg-meat text-white" : "bg-muted text-ink"}`}>
+                  <Bike className="h-5 w-5" />
+                </div>
+                <div>
+                  <div className="font-bold text-ink">DoorDash delivery</div>
+                  <div className="text-xs text-muted-foreground">$4.99 · Live tracking</div>
+                </div>
+              </button>
             </div>
           </div>
+
+          {fulfillment === "pickup" ? (
+            <div className="rounded-2xl border border-border bg-card">
+              <div className="flex items-center gap-2 border-b border-border px-6 py-4">
+                <CalendarDays className="h-4 w-4 text-meat" />
+                <span className="font-bold text-ink">Choose pickup time</span>
+              </div>
+              <div className="space-y-5 p-6">
+                <div>
+                  <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Date</div>
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {dates.map((d) => {
+                      const active = format(d, "yyyy-MM-dd") === format(date, "yyyy-MM-dd");
+                      return (
+                        <button
+                          key={d.toISOString()}
+                          onClick={() => setDate(d)}
+                          className={`flex min-w-20 flex-col rounded-xl border px-4 py-3 text-left transition-colors ${
+                            active ? "border-meat bg-meat text-white" : "border-border bg-background hover:border-meat/50"
+                          }`}
+                        >
+                          <span className="text-[10px] font-bold uppercase tracking-wider opacity-80">{format(d, "EEE")}</span>
+                          <span className="text-lg font-black">{format(d, "d")}</span>
+                          <span className="text-[10px] opacity-80">{format(d, "MMM")}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+                <div>
+                  <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Time window</div>
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {PICKUP_TIMES.map((t) => (
+                      <button
+                        key={t}
+                        onClick={() => setTime(t)}
+                        className={`flex items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-sm font-semibold transition-colors ${
+                          time === t ? "border-meat bg-meat text-white" : "border-border bg-background text-ink hover:border-meat/50"
+                        }`}
+                      >
+                        <Clock className="h-3.5 w-3.5" /> {t}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="rounded-2xl border border-border bg-card">
+              <div className="flex items-center gap-2 border-b border-border px-6 py-4">
+                <MapPin className="h-4 w-4 text-meat" />
+                <span className="font-bold text-ink">Delivery address</span>
+              </div>
+              <div className="space-y-3 p-6">
+                <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Street address</Label>
+                <Input
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                  placeholder="1600 Market St, Brisbane QLD"
+                  className="focus-visible:ring-meat"
+                />
+                <p className="text-xs text-muted-foreground">
+                  A DoorDash Dasher will pick up your order and deliver it in ~25 min. You'll be able to track it live.
+                </p>
+              </div>
+            </div>
+          )}
 
           {/* Payment */}
           <div className="relative rounded-2xl border-2 border-meat/30 bg-card">
@@ -243,8 +330,8 @@ function Checkout() {
               <span className="font-semibold text-ink">${tax.toFixed(2)}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-muted-foreground">Pickup</span>
-              <span className="font-semibold text-ink">Free</span>
+              <span className="text-muted-foreground">{fulfillment === "delivery" ? "Delivery fee" : "Pickup"}</span>
+              <span className="font-semibold text-ink">{fulfillment === "delivery" ? `$${deliveryFee.toFixed(2)}` : "Free"}</span>
             </div>
             {clampedPoints > 0 && (
               <div className="flex justify-between">
@@ -324,8 +411,12 @@ function Checkout() {
           </div>
 
           <div className="rounded-xl bg-background p-3 text-sm">
-            <div className="font-semibold text-ink">Pickup window</div>
-            <div className="text-muted-foreground">{format(date, "EEEE, MMMM d")} · {time}</div>
+            <div className="font-semibold text-ink">{fulfillment === "delivery" ? "Delivery to" : "Pickup window"}</div>
+            <div className="text-muted-foreground">
+              {fulfillment === "delivery"
+                ? address || <span className="italic">Enter address above</span>
+                : `${format(date, "EEEE, MMMM d")} · ${time}`}
+            </div>
           </div>
 
           {user ? (
@@ -334,7 +425,7 @@ function Checkout() {
               onClick={handlePay}
               className="w-full bg-meat py-6 text-base font-bold text-white hover:bg-meat-dark"
             >
-              {processing ? "Processing…" : `Pay $${total.toFixed(2)}`}
+              {processing ? "Processing…" : fulfillment === "delivery" ? `Pay $${total.toFixed(2)} & track delivery` : `Pay $${total.toFixed(2)}`}
             </Button>
           ) : (
             <div className="space-y-2">
