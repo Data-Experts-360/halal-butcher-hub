@@ -250,7 +250,7 @@ function Home() {
                 accentIndex={4}
                 className="mt-3 text-4xl sm:text-5xl"
               />
-              <p className="mt-6 text-lg text-muted-foreground">
+              <p className="mt-6 text-justify text-lg text-muted-foreground">
                 Discover Brisbane's top choice for high-quality, halal-certified meats at
                 PA Halal Butcher & Grocer. Located in the heart of the city, we offer a
                 wide selection of fresh, ethically sourced beef, lamb, chicken, and more.
@@ -258,7 +258,7 @@ function Home() {
                 essentials, exotic spices, and specialty foods to meet all your culinary
                 needs.
               </p>
-              <p className="mt-4 text-lg text-muted-foreground">
+              <p className="mt-4 text-justify text-lg text-muted-foreground">
                 Experience exceptional customer service, expert advice, and a shopping
                 experience designed around your satisfaction. Visit us to see why we're
                 the preferred halal butcher and grocer in Brisbane.
