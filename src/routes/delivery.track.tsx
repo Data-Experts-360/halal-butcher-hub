@@ -321,8 +321,9 @@ function IconButton({
 /* -------------------- Mock Map -------------------- */
 
 function MockMap({ driverProgress, stage }: { driverProgress: number; stage: StageKey }) {
-  // Path from restaurant (80, 220) → user home (340, 90) as a smooth curve
-  const path = "M 80 220 C 150 210, 200 180, 240 150 S 320 110, 340 90";
+  // Path follows the road grid: east along y=220, north along x=300, east along y=90.
+  // Small arc radii at corners so the bike turns naturally rather than teleporting.
+  const path = "M 80 220 L 292 220 A 8 8 0 0 0 300 212 L 300 98 A 8 8 0 0 1 308 90 L 340 90";
   const pt = useMemo(() => pointOnPath(path, driverProgress), [driverProgress]);
 
   const showDriver = stage !== "placed" && stage !== "preparing";
