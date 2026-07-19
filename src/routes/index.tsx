@@ -732,7 +732,7 @@ function Home() {
                 </div>
                 <div>
                   <h3 className="text-xl font-extrabold text-ink">PA Halal Butcher & Grocer</h3>
-                  <p className="text-sm text-muted-foreground">Shop 6, 429 Logan Road, Greenslopes QLD 4120</p>
+                  <p className="text-sm text-muted-foreground">2/250 Ipswich Rd, Woolloongabba QLD 4102, Australia</p>
                 </div>
               </div>
 
@@ -741,14 +741,14 @@ function Home() {
                   <Clock className="mt-0.5 h-5 w-5 shrink-0 text-meat" />
                   <div>
                     <p className="font-semibold text-ink">Open today</p>
-                    <p className="text-sm text-muted-foreground">8:00 AM – 8:00 PM</p>
+                    <p className="text-sm text-muted-foreground">8 am – 6 pm</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
                   <Phone className="mt-0.5 h-5 w-5 shrink-0 text-meat" />
                   <div>
                     <p className="font-semibold text-ink">Call ahead</p>
-                    <p className="text-sm text-muted-foreground">(07) 3397 1234</p>
+                    <p className="text-sm text-muted-foreground">+61 7 3393 1213</p>
                   </div>
                 </div>
               </div>
