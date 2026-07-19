@@ -411,8 +411,12 @@ function Checkout() {
           </div>
 
           <div className="rounded-xl bg-background p-3 text-sm">
-            <div className="font-semibold text-ink">Pickup window</div>
-            <div className="text-muted-foreground">{format(date, "EEEE, MMMM d")} · {time}</div>
+            <div className="font-semibold text-ink">{fulfillment === "delivery" ? "Delivery to" : "Pickup window"}</div>
+            <div className="text-muted-foreground">
+              {fulfillment === "delivery"
+                ? address || <span className="italic">Enter address above</span>
+                : `${format(date, "EEEE, MMMM d")} · ${time}`}
+            </div>
           </div>
 
           {user ? (
