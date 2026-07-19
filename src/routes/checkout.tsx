@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useShop, cartTotal } from "@/lib/store";
-import { Beef, CalendarDays, Clock, CreditCard, Gift, Lock, Minus, Plus, Sparkles, Trash2, X } from "lucide-react";
+import { Beef, Bike, CalendarDays, Clock, CreditCard, Gift, Lock, MapPin, Minus, Package, Plus, Sparkles, Trash2, X } from "lucide-react";
 
 export const Route = createFileRoute("/checkout")({
   head: () => ({
