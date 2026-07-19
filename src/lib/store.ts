@@ -176,6 +176,9 @@ export const useShop = create<ShopState>()(
         }),
       deleteProduct: (id) =>
         set({ adminProducts: get().adminProducts.filter((p) => p.id !== id) }),
+
+      activeDelivery: null,
+      setActiveDelivery: (d) => set({ activeDelivery: d }),
     }),
     {
       name: "pa-halal-shop",
