@@ -30,10 +30,14 @@ function Checkout() {
   const clearCart = useShop((s) => s.clearCart);
   const addPoints = useShop((s) => s.addPoints);
   const addOrder = useShop((s) => s.addOrder);
+  const setActiveDelivery = useShop((s) => s.setActiveDelivery);
 
   const dates = Array.from({ length: 5 }, (_, i) => addDays(new Date(), i));
   const [date, setDate] = useState<Date>(dates[0]);
   const [time, setTime] = useState<string>(PICKUP_TIMES[2]);
+
+  const [fulfillment, setFulfillment] = useState<"pickup" | "delivery">("pickup");
+  const [address, setAddress] = useState("");
 
   const [card, setCard] = useState({ name: user?.name ?? "", number: "4242 4242 4242 4242", exp: "12/28", cvc: "123" });
   const [processing, setProcessing] = useState(false);
@@ -42,7 +46,8 @@ function Checkout() {
   const POINTS_PER_DOLLAR = 5; // 50 pts = $10 → 5 pts = $1
   const subtotal = cartTotal(cart);
   const tax = subtotal * 0.06;
-  const preDiscountTotal = subtotal + tax;
+  const deliveryFee = fulfillment === "delivery" ? 4.99 : 0;
+  const preDiscountTotal = subtotal + tax + deliveryFee;
   const maxRedeemable = user
     ? Math.min(user.points, Math.floor(preDiscountTotal * POINTS_PER_DOLLAR))
     : 0;
