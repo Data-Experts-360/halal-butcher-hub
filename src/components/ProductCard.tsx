@@ -102,7 +102,9 @@ export function ProductCard({ product }: { product: Product }) {
           </div>
         )}
 
+        <div className="flex-1" />
         <Button
+
           onClick={handleAdd}
           className="mt-4 w-full bg-meat text-white hover:bg-meat-dark"
         >
