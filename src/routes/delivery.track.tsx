@@ -14,6 +14,7 @@ import {
   X,
 } from "lucide-react";
 import { NetworkLog } from "./delivery.index";
+import { useShop } from "@/lib/store";
 
 export const Route = createFileRoute("/delivery/track")({
   head: () => ({
