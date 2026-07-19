@@ -396,7 +396,6 @@ function MockMap({ driverProgress, stage }: { driverProgress: number; stage: Sta
           strokeLinecap="round"
           strokeDasharray="1000"
           strokeDashoffset={1000 - driverProgress * 1000}
-          style={{ transition: "stroke-dashoffset 1s linear" }}
         />
       </svg>
 
