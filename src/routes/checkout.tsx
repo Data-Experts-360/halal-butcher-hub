@@ -177,52 +177,107 @@ function Checkout() {
             </ul>
           </div>
 
-          {/* Pickup */}
+          {/* Fulfillment method */}
           <div className="rounded-2xl border border-border bg-card">
-            <div className="flex items-center gap-2 border-b border-border px-6 py-4">
-              <CalendarDays className="h-4 w-4 text-meat" />
-              <span className="font-bold text-ink">Choose pickup time</span>
-            </div>
-            <div className="space-y-5 p-6">
-              <div>
-                <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Date</div>
-                <div className="mt-2 flex flex-wrap gap-2">
-                  {dates.map((d) => {
-                    const active = format(d, "yyyy-MM-dd") === format(date, "yyyy-MM-dd");
-                    return (
-                      <button
-                        key={d.toISOString()}
-                        onClick={() => setDate(d)}
-                        className={`flex min-w-20 flex-col rounded-xl border px-4 py-3 text-left transition-colors ${
-                          active ? "border-meat bg-meat text-white" : "border-border bg-background hover:border-meat/50"
-                        }`}
-                      >
-                        <span className="text-[10px] font-bold uppercase tracking-wider opacity-80">{format(d, "EEE")}</span>
-                        <span className="text-lg font-black">{format(d, "d")}</span>
-                        <span className="text-[10px] opacity-80">{format(d, "MMM")}</span>
-                      </button>
-                    );
-                  })}
+            <div className="border-b border-border px-6 py-4 font-bold text-ink">How would you like your order?</div>
+            <div className="grid gap-3 p-6 sm:grid-cols-2">
+              <button
+                onClick={() => setFulfillment("pickup")}
+                className={`flex items-start gap-3 rounded-xl border-2 p-4 text-left transition-all ${
+                  fulfillment === "pickup" ? "border-meat bg-meat/5 shadow-sm" : "border-border bg-background hover:border-meat/50"
+                }`}
+              >
+                <div className={`grid h-10 w-10 shrink-0 place-items-center rounded-lg ${fulfillment === "pickup" ? "bg-meat text-white" : "bg-muted text-ink"}`}>
+                  <Package className="h-5 w-5" />
                 </div>
-              </div>
-              <div>
-                <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Time window</div>
-                <div className="mt-2 flex flex-wrap gap-2">
-                  {PICKUP_TIMES.map((t) => (
-                    <button
-                      key={t}
-                      onClick={() => setTime(t)}
-                      className={`flex items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-sm font-semibold transition-colors ${
-                        time === t ? "border-meat bg-meat text-white" : "border-border bg-background text-ink hover:border-meat/50"
-                      }`}
-                    >
-                      <Clock className="h-3.5 w-3.5" /> {t}
-                    </button>
-                  ))}
+                <div>
+                  <div className="font-bold text-ink">In-store pickup</div>
+                  <div className="text-xs text-muted-foreground">Free · Scan QR at counter</div>
                 </div>
-              </div>
+              </button>
+              <button
+                onClick={() => setFulfillment("delivery")}
+                className={`flex items-start gap-3 rounded-xl border-2 p-4 text-left transition-all ${
+                  fulfillment === "delivery" ? "border-meat bg-meat/5 shadow-sm" : "border-border bg-background hover:border-meat/50"
+                }`}
+              >
+                <div className={`grid h-10 w-10 shrink-0 place-items-center rounded-lg ${fulfillment === "delivery" ? "bg-meat text-white" : "bg-muted text-ink"}`}>
+                  <Bike className="h-5 w-5" />
+                </div>
+                <div>
+                  <div className="font-bold text-ink">DoorDash delivery</div>
+                  <div className="text-xs text-muted-foreground">$4.99 · Live tracking</div>
+                </div>
+              </button>
             </div>
           </div>
+
+          {fulfillment === "pickup" ? (
+            <div className="rounded-2xl border border-border bg-card">
+              <div className="flex items-center gap-2 border-b border-border px-6 py-4">
+                <CalendarDays className="h-4 w-4 text-meat" />
+                <span className="font-bold text-ink">Choose pickup time</span>
+              </div>
+              <div className="space-y-5 p-6">
+                <div>
+                  <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Date</div>
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {dates.map((d) => {
+                      const active = format(d, "yyyy-MM-dd") === format(date, "yyyy-MM-dd");
+                      return (
+                        <button
+                          key={d.toISOString()}
+                          onClick={() => setDate(d)}
+                          className={`flex min-w-20 flex-col rounded-xl border px-4 py-3 text-left transition-colors ${
+                            active ? "border-meat bg-meat text-white" : "border-border bg-background hover:border-meat/50"
+                          }`}
+                        >
+                          <span className="text-[10px] font-bold uppercase tracking-wider opacity-80">{format(d, "EEE")}</span>
+                          <span className="text-lg font-black">{format(d, "d")}</span>
+                          <span className="text-[10px] opacity-80">{format(d, "MMM")}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+                <div>
+                  <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Time window</div>
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {PICKUP_TIMES.map((t) => (
+                      <button
+                        key={t}
+                        onClick={() => setTime(t)}
+                        className={`flex items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-sm font-semibold transition-colors ${
+                          time === t ? "border-meat bg-meat text-white" : "border-border bg-background text-ink hover:border-meat/50"
+                        }`}
+                      >
+                        <Clock className="h-3.5 w-3.5" /> {t}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="rounded-2xl border border-border bg-card">
+              <div className="flex items-center gap-2 border-b border-border px-6 py-4">
+                <MapPin className="h-4 w-4 text-meat" />
+                <span className="font-bold text-ink">Delivery address</span>
+              </div>
+              <div className="space-y-3 p-6">
+                <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Street address</Label>
+                <Input
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                  placeholder="1600 Market St, Brisbane QLD"
+                  className="focus-visible:ring-meat"
+                />
+                <p className="text-xs text-muted-foreground">
+                  A DoorDash Dasher will pick up your order and deliver it in ~25 min. You'll be able to track it live.
+                </p>
+              </div>
+            </div>
+          )}
 
           {/* Payment */}
           <div className="relative rounded-2xl border-2 border-meat/30 bg-card">
