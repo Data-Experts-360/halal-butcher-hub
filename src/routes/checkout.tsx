@@ -330,8 +330,8 @@ function Checkout() {
               <span className="font-semibold text-ink">${tax.toFixed(2)}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-muted-foreground">Pickup</span>
-              <span className="font-semibold text-ink">Free</span>
+              <span className="text-muted-foreground">{fulfillment === "delivery" ? "Delivery fee" : "Pickup"}</span>
+              <span className="font-semibold text-ink">{fulfillment === "delivery" ? `$${deliveryFee.toFixed(2)}` : "Free"}</span>
             </div>
             {clampedPoints > 0 && (
               <div className="flex justify-between">
