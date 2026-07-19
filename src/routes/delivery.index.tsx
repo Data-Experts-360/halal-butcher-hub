@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { ChevronDown, ChevronUp, Package, Terminal, Truck, CheckCircle2, Clock } from "lucide-react";
 
-export const Route = createFileRoute("/delivery")({
+export const Route = createFileRoute("/delivery/")({
   head: () => ({
     meta: [
       { title: "Order Confirmation — DoorDash Delivery" },

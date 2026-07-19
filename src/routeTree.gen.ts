@@ -15,10 +15,10 @@ import { Route as SignupRouteImport } from './routes/signup'
 import { Route as SigninRouteImport } from './routes/signin'
 import { Route as ShopMeatRouteImport } from './routes/shop-meat'
 import { Route as GroceryRouteImport } from './routes/grocery'
-import { Route as DeliveryRouteImport } from './routes/delivery'
 import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DeliveryIndexRouteImport } from './routes/delivery.index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as AdminProductsRouteImport } from './routes/admin.products'
 import { Route as AdminOrdersRouteImport } from './routes/admin.orders'
@@ -54,11 +54,6 @@ const GroceryRoute = GroceryRouteImport.update({
   path: '/grocery',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DeliveryRoute = DeliveryRouteImport.update({
-  id: '/delivery',
-  path: '/delivery',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const CheckoutRoute = CheckoutRouteImport.update({
   id: '/checkout',
   path: '/checkout',
@@ -72,6 +67,11 @@ const AdminRoute = AdminRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DeliveryIndexRoute = DeliveryIndexRouteImport.update({
+  id: '/delivery/',
+  path: '/delivery/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
@@ -99,7 +99,6 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/checkout': typeof CheckoutRoute
-  '/delivery': typeof DeliveryRoute
   '/grocery': typeof GroceryRoute
   '/shop-meat': typeof ShopMeatRoute
   '/signin': typeof SigninRoute
@@ -110,11 +109,11 @@ export interface FileRoutesByFullPath {
   '/admin/orders': typeof AdminOrdersRoute
   '/admin/products': typeof AdminProductsRoute
   '/admin/': typeof AdminIndexRoute
+  '/delivery/': typeof DeliveryIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/checkout': typeof CheckoutRoute
-  '/delivery': typeof DeliveryRoute
   '/grocery': typeof GroceryRoute
   '/shop-meat': typeof ShopMeatRoute
   '/signin': typeof SigninRoute
@@ -125,13 +124,13 @@ export interface FileRoutesByTo {
   '/admin/orders': typeof AdminOrdersRoute
   '/admin/products': typeof AdminProductsRoute
   '/admin': typeof AdminIndexRoute
+  '/delivery': typeof DeliveryIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/checkout': typeof CheckoutRoute
-  '/delivery': typeof DeliveryRoute
   '/grocery': typeof GroceryRoute
   '/shop-meat': typeof ShopMeatRoute
   '/signin': typeof SigninRoute
@@ -142,6 +141,7 @@ export interface FileRoutesById {
   '/admin/orders': typeof AdminOrdersRoute
   '/admin/products': typeof AdminProductsRoute
   '/admin/': typeof AdminIndexRoute
+  '/delivery/': typeof DeliveryIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -149,7 +149,6 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/checkout'
-    | '/delivery'
     | '/grocery'
     | '/shop-meat'
     | '/signin'
@@ -160,11 +159,11 @@ export interface FileRouteTypes {
     | '/admin/orders'
     | '/admin/products'
     | '/admin/'
+    | '/delivery/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/checkout'
-    | '/delivery'
     | '/grocery'
     | '/shop-meat'
     | '/signin'
@@ -175,12 +174,12 @@ export interface FileRouteTypes {
     | '/admin/orders'
     | '/admin/products'
     | '/admin'
+    | '/delivery'
   id:
     | '__root__'
     | '/'
     | '/admin'
     | '/checkout'
-    | '/delivery'
     | '/grocery'
     | '/shop-meat'
     | '/signin'
@@ -191,19 +190,20 @@ export interface FileRouteTypes {
     | '/admin/orders'
     | '/admin/products'
     | '/admin/'
+    | '/delivery/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRouteWithChildren
   CheckoutRoute: typeof CheckoutRoute
-  DeliveryRoute: typeof DeliveryRoute
   GroceryRoute: typeof GroceryRoute
   ShopMeatRoute: typeof ShopMeatRoute
   SigninRoute: typeof SigninRoute
   SignupRoute: typeof SignupRoute
   SuccessRoute: typeof SuccessRoute
   WishlistRoute: typeof WishlistRoute
+  DeliveryIndexRoute: typeof DeliveryIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -250,13 +250,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GroceryRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/delivery': {
-      id: '/delivery'
-      path: '/delivery'
-      fullPath: '/delivery'
-      preLoaderRoute: typeof DeliveryRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/checkout': {
       id: '/checkout'
       path: '/checkout'
@@ -276,6 +269,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/delivery/': {
+      id: '/delivery/'
+      path: '/delivery'
+      fullPath: '/delivery/'
+      preLoaderRoute: typeof DeliveryIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/': {
@@ -329,13 +329,13 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRouteWithChildren,
   CheckoutRoute: CheckoutRoute,
-  DeliveryRoute: DeliveryRoute,
   GroceryRoute: GroceryRoute,
   ShopMeatRoute: ShopMeatRoute,
   SigninRoute: SigninRoute,
   SignupRoute: SignupRoute,
   SuccessRoute: SuccessRoute,
   WishlistRoute: WishlistRoute,
+  DeliveryIndexRoute: DeliveryIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
