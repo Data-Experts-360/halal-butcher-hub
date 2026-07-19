@@ -79,7 +79,7 @@ function DeliveryConfirmation() {
           </div>
           <div>
             <div className="text-xs font-semibold uppercase tracking-wider text-neutral-500">DoorDash · Order confirmed</div>
-            <div className="text-lg font-bold text-neutral-900">Order #GBJ-9F2K1H</div>
+            <div className="text-lg font-bold text-neutral-900">Order #{orderId}</div>
           </div>
         </div>
 
@@ -95,7 +95,10 @@ function DeliveryConfirmation() {
                 Live
               </div>
               <h1 className="mt-1 text-2xl font-black text-neutral-900">Preparing your order…</h1>
-              <p className="mt-1 text-sm text-neutral-600">Gourmet Burger Joint · 1.2 mi away</p>
+              <p className="mt-1 text-sm text-neutral-600">PA Halal Butcher &amp; Grocer · 1.2 mi away</p>
+              <p className="mt-2 flex items-center gap-1.5 text-xs font-semibold text-neutral-500">
+                <MapPin className="h-3.5 w-3.5 text-[#FF3008]" /> {address}
+              </p>
             </div>
             <div className="hidden sm:flex flex-col items-end">
               <div className="text-xs font-semibold uppercase tracking-wider text-neutral-500">ETA</div>
