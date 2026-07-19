@@ -27,6 +27,7 @@ const now = () => {
 };
 
 function DeliveryConfirmation() {
+  const activeDelivery = useShop((s) => s.activeDelivery);
   const [logs, setLogs] = useState<LogLine[]>([]);
   const [logOpen, setLogOpen] = useState(true);
   const idRef = useRef(0);
@@ -36,32 +37,37 @@ function DeliveryConfirmation() {
     setLogs((prev) => [...prev, { ...l, id: ++idRef.current, ts: now() }]);
 
   useEffect(() => {
+    const addr = activeDelivery?.address ?? "1600 Market St";
     const seq: Array<[number, Omit<LogLine, "id" | "ts">]> = [
       [200, { method: "POST", text: "/api/v1/orders/create", status: "201 Created" }],
-      [900, { method: "POST", text: "/api/v1/payments/charge  amount=42.87", status: "200 OK" }],
-      [1700, { method: "GET", text: "/api/v1/merchants/gourmet-burger-joint", status: "200 OK" }],
-      [2600, { method: "POST", text: "/api/v1/deliveries/quote  dropoff=1600 Market St", status: "200 OK" }],
-      [3600, { method: "POST", text: "/api/v1/deliveries/create  external_id=ord_9F2K1H", status: "201 Created" }],
+      [900, { method: "POST", text: `/api/v1/payments/charge  amount=${(activeDelivery?.total ?? 0).toFixed(2)}`, status: "200 OK" }],
+      [1700, { method: "GET", text: "/api/v1/merchants/pa-halal-butcher", status: "200 OK" }],
+      [2600, { method: "POST", text: `/api/v1/deliveries/quote  dropoff=${addr}`, status: "200 OK" }],
+      [3600, { method: "POST", text: `/api/v1/deliveries/create  external_id=${activeDelivery?.id ?? "ord_9F2K1H"}`, status: "201 Created" }],
       [4600, { method: "GET", text: "/api/v1/deliveries/track  id=dlv_ax82nq", status: "200 OK" }],
       [5800, { method: "WEBHOOK", text: "delivery.status.updated: preparing" }],
     ];
     const timers = seq.map(([d, l]) => setTimeout(() => pushLog(l), d));
     return () => timers.forEach(clearTimeout);
-  }, []);
+  }, [activeDelivery]);
 
   useEffect(() => {
     if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
   }, [logs]);
 
-  const items = [
-    { name: "Truffle Burger", qty: 2, price: 15.5 },
-    { name: "Hand-Cut Fries", qty: 1, price: 6.0 },
-    { name: "Craft Root Beer", qty: 1, price: 3.5 },
+  const fallbackItems = [
+    { name: "Truffle Burger", qty: 2, unit: "unit", price: 15.5, image: "" },
+    { name: "Hand-Cut Fries", qty: 1, unit: "unit", price: 6.0, image: "" },
   ];
-  const subtotal = items.reduce((s, i) => s + i.qty * i.price, 0);
-  const delivery = 2.99;
-  const tax = subtotal * 0.06;
-  const total = subtotal + delivery + tax;
+  const items = activeDelivery
+    ? activeDelivery.items.map((c) => ({ name: c.name, qty: c.quantity, unit: c.unit, price: c.price, image: c.image, prep: c.preparation }))
+    : fallbackItems.map((f) => ({ ...f, prep: undefined as string | undefined }));
+  const subtotal = activeDelivery?.subtotal ?? items.reduce((s, i) => s + i.qty * i.price, 0);
+  const delivery = activeDelivery?.fee ?? 2.99;
+  const tax = activeDelivery?.tax ?? subtotal * 0.06;
+  const total = activeDelivery?.total ?? subtotal + delivery + tax;
+  const orderId = activeDelivery?.id ?? "PA-9F2K1H";
+  const address = activeDelivery?.address ?? "1600 Market St";
 
   return (
     <div className="min-h-screen bg-[#F7F7F7] pb-40">
