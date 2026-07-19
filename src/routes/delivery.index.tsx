@@ -127,13 +127,22 @@ function DeliveryConfirmation() {
             </span>
           </div>
           <ul className="mt-4 divide-y divide-neutral-100">
-            {items.map((it) => (
-              <li key={it.name} className="flex items-center justify-between py-3">
-                <div className="flex items-center gap-3">
-                  <span className="grid h-9 w-9 place-items-center rounded-lg bg-[#FFF1EE] text-sm font-bold text-[#FF3008]">
-                    {it.qty}×
-                  </span>
-                  <span className="text-sm font-semibold text-neutral-800">{it.name}</span>
+            {items.map((it, idx) => (
+              <li key={`${it.name}-${it.prep ?? ""}-${idx}`} className="flex items-center justify-between gap-3 py-3">
+                <div className="flex min-w-0 items-center gap-3">
+                  {it.image ? (
+                    <img src={it.image} alt={it.name} className="h-11 w-11 shrink-0 rounded-lg object-cover" />
+                  ) : (
+                    <span className="grid h-11 w-11 shrink-0 place-items-center rounded-lg bg-[#FFF1EE] text-sm font-bold text-[#FF3008]">
+                      {it.qty}×
+                    </span>
+                  )}
+                  <div className="min-w-0">
+                    <div className="truncate text-sm font-semibold text-neutral-800">{it.name}</div>
+                    <div className="text-xs text-neutral-500">
+                      {it.qty} × {it.unit}{it.prep ? ` · ${it.prep}` : ""}
+                    </div>
+                  </div>
                 </div>
                 <span className="text-sm font-bold text-neutral-900">${(it.price * it.qty).toFixed(2)}</span>
               </li>
