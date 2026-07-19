@@ -413,7 +413,6 @@ function MockMap({ driverProgress, stage }: { driverProgress: number; stage: Sta
             left: `${(pt.x / 420) * 100}%`,
             top: `${(pt.y / 320) * 100}%`,
             transform: "translate(-50%, -50%)",
-            transition: "left 1s linear, top 1s linear",
           }}
         >
           <div className="relative">
