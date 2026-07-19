@@ -400,8 +400,8 @@ function MockMap({ driverProgress, stage }: { driverProgress: number; stage: Sta
           strokeWidth="4"
           fill="none"
           strokeLinecap="round"
-          strokeDasharray="1000"
-          strokeDashoffset={1000 - driverProgress * 1000}
+          strokeDasharray={pathLen || 1}
+          strokeDashoffset={(pathLen || 1) * (1 - driverProgress)}
         />
       </svg>
 
