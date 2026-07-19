@@ -68,10 +68,10 @@ function TrackDelivery() {
   const pushLog = (l: Omit<LogLine, "id" | "ts">) =>
     setLogs((prev) => [...prev, { ...l, id: ++idRef.current, ts: now() }]);
 
-  // Countdown timer
+  // Countdown timer (before dasher is out, tick down slowly)
   useEffect(() => {
-    if (stage === "arrived") return;
-    const t = setInterval(() => setEtaMin((m) => Math.max(0, m - 1)), 12000);
+    if (stage === "arrived" || stage === "out") return;
+    const t = setInterval(() => setEtaMin((m) => Math.max(1, m - 1)), 15000);
     return () => clearInterval(t);
   }, [stage]);
 
@@ -79,29 +79,41 @@ function TrackDelivery() {
   useEffect(() => {
     pushLog({ method: "GET", text: "/api/v1/deliveries/track  id=dlv_ax82nq", status: "200 OK" });
 
+    const AT_STORE_AT = 12000;
+    const OUT_AT = 24000;
+    const ARRIVE_AT = 114000; // 90s of smooth driving
+    const OUT_ETA = 9; // minutes shown when driver starts moving
+
     const t1 = setTimeout(() => {
       setStage("at_store");
       pushLog({ method: "WEBHOOK", text: "delivery.status.updated: dasher_at_store" });
-    }, 15000);
+    }, AT_STORE_AT);
 
     const t2 = setTimeout(() => {
       setStage("out");
-      setEtaMin(12);
+      setEtaMin(OUT_ETA);
       pushLog({ method: "WEBHOOK", text: "delivery.status.updated: enroute_to_dropoff" });
       pushLog({ method: "GET", text: "/api/v1/deliveries/dlv_ax82nq/route", status: "200 OK" });
-    }, 30000);
+    }, OUT_AT);
 
-    // Animate driver from 30s to 60s
+    // Smooth driver animation across the whole "out for delivery" window.
+    // rAF drives progress every frame; the marker has no CSS transition so it
+    // moves seamlessly rather than easing in 1s hops.
     let raf = 0;
-    const animStart = 30000;
-    const animEnd = 60000;
     const started = Date.now();
+    // Ease-in-out so departure and arrival feel natural, mid-route stays steady.
+    const easeInOut = (t: number) => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
     const tick = () => {
       const elapsed = Date.now() - started;
-      if (elapsed >= animStart && elapsed <= animEnd) {
-        setDriverProgress((elapsed - animStart) / (animEnd - animStart));
+      if (elapsed >= OUT_AT && elapsed <= ARRIVE_AT) {
+        const raw = (elapsed - OUT_AT) / (ARRIVE_AT - OUT_AT);
+        const eased = easeInOut(raw);
+        setDriverProgress(eased);
+        // Drive ETA continuously off progress so it ticks down as the bike moves.
+        const remaining = Math.max(1, Math.ceil(OUT_ETA * (1 - eased)));
+        setEtaMin(remaining);
       }
-      if (elapsed < animEnd) raf = requestAnimationFrame(tick);
+      if (elapsed < ARRIVE_AT) raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
 
@@ -112,7 +124,7 @@ function TrackDelivery() {
       pushLog({ method: "WEBHOOK", text: "delivery.status.updated: delivered" });
       setNotif("Alex has dropped off your order!");
       setTimeout(() => setNotif(null), 6000);
-    }, 60000);
+    }, ARRIVE_AT);
 
     // Periodic driver ping logs
     const pingInterval = setInterval(() => {
@@ -384,7 +396,6 @@ function MockMap({ driverProgress, stage }: { driverProgress: number; stage: Sta
           strokeLinecap="round"
           strokeDasharray="1000"
           strokeDashoffset={1000 - driverProgress * 1000}
-          style={{ transition: "stroke-dashoffset 1s linear" }}
         />
       </svg>
 
@@ -402,7 +413,6 @@ function MockMap({ driverProgress, stage }: { driverProgress: number; stage: Sta
             left: `${(pt.x / 420) * 100}%`,
             top: `${(pt.y / 320) * 100}%`,
             transform: "translate(-50%, -50%)",
-            transition: "left 1s linear, top 1s linear",
           }}
         >
           <div className="relative">
