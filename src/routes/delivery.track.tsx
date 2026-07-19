@@ -51,6 +51,8 @@ interface LogLine {
 
 function TrackDelivery() {
   const navigate = useNavigate();
+  const activeDelivery = useShop((s) => s.activeDelivery);
+  const orderId = activeDelivery?.id ?? "PA-9F2K1H";
   const [stage, setStage] = useState<StageKey>("preparing");
   const [etaMin, setEtaMin] = useState(25);
   const [driverProgress, setDriverProgress] = useState(0); // 0..1 along path
