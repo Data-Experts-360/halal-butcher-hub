@@ -755,7 +755,7 @@ function Home() {
 
               <div className="mt-8">
                 <a
-                  href="https://www.google.com/maps/dir//PA+Halal+Butcher+%26+Grocer"
+                  href="https://www.google.com/maps/dir//2%2F250+Ipswich+Rd,+Woolloongabba+QLD+4102,+Australia"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
