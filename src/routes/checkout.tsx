@@ -67,17 +67,25 @@ function Checkout() {
       navigate({ to: "/signin" });
       return;
     }
+    if (fulfillment === "delivery" && address.trim().length < 5) {
+      toast.error("Please enter a delivery address");
+      return;
+    }
     setProcessing(true);
     await new Promise((r) => setTimeout(r, 1500));
 
     const orderId = `PA-${Math.random().toString(36).slice(2, 8).toUpperCase()}`;
+    const pickupLabel =
+      fulfillment === "delivery"
+        ? `Delivery · ${address}`
+        : `${format(date, "EEE, MMM d")} · ${time}`;
     const order = {
       id: orderId,
       customerName: user.name,
       customerEmail: user.email,
       total,
       pointsEarned,
-      pickup: `${format(date, "EEE, MMM d")} · ${time}`,
+      pickup: pickupLabel,
       items: cart.map((c) => ({ name: c.name, qty: c.quantity, unit: c.unit, price: c.price, prep: c.preparation })),
       status: "pending" as const,
       createdAt: Date.now(),
@@ -89,6 +97,25 @@ function Checkout() {
       if (clampedPoints > 0) addPoints(-clampedPoints);
       addPoints(pointsEarned);
     }
+
+    if (fulfillment === "delivery") {
+      setActiveDelivery({
+        id: orderId,
+        items: [...cart],
+        subtotal,
+        tax,
+        fee: deliveryFee,
+        total,
+        address,
+        customerName: user.name,
+        createdAt: Date.now(),
+      });
+      clearCart();
+      toast.success("Delivery on the way");
+      navigate({ to: "/delivery" });
+      return;
+    }
+
     clearCart();
     toast.success("Payment successful");
     navigate({ to: "/success" });
